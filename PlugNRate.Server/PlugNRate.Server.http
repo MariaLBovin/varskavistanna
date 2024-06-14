@@ -1,0 +1,6 @@
+@PlugNRate.Server_HostAddress = http://localhost:5124
+
+GET {{PlugNRate.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
