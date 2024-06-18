@@ -1,0 +1,21 @@
+.button{
+    min-width: 110px;
+    min-height: 30px;
+    border-radius: 5px;
+    border: none;
+    font-size: 1.6rem;
+}
+.button-primary {
+    background-color: var(--primary-blue);
+}
+.button-secondary {
+    background-color: var(--secondary-yellow);
+}
+.button-primary:hover {
+    background-color: var(--primary-hover);
+    border-color: none;
+}
+.button-secondary:hover {
+    background-color: var(--secondary-hover);
+    border-color: none;
+}
