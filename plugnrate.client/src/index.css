@@ -10,12 +10,14 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
   --primary-blue: #AED9E0;
   --secondary-yellow: #FAF3DD;
   --tertriary-blue: #5E6472;
   --primary-hover: #89C8D2;
   --secondary-hover: #F2E0A6;
 }
+
 
 body {
   margin: 0;
