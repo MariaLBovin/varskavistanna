@@ -1,5 +1,5 @@
 
-import { IButtonProps } from '../interfaces'
+import { IButtonProps } from './interfaces'
 import './button.css';
 
 const Button = ({variant, text, onClick}:IButtonProps) => {
