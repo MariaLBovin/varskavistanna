@@ -16,6 +16,7 @@
   --tertriary-blue: #5E6472;
   --primary-hover: #89C8D2;
   --secondary-hover: #F2E0A6;
+  --gap: 16px
 }
 
 body {
@@ -24,6 +25,10 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+}
+p, h1, h2 {
+  margin: 0;
+  padding: 0;
 }
 input {
   border: none;
@@ -40,7 +45,11 @@ p {
   margin: 0;
   padding: 0;
 }
-
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

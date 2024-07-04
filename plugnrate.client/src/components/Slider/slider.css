@@ -1,0 +1,24 @@
+.slider-container {
+    width: 220px;
+}
+.slider-header {
+    font-size: 1.6rem;
+    text-align: left;
+    margin-bottom: var(--gap);
+}
+.slider-bar-wrapper {
+    display: flex;
+    justify-content: space-evenly;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin-bottom: calc(var(--gap) /2);
+}
+.slider-description-wrapper {
+    display: flex;
+    justify-content: space-evenly;
+    
+}
+.slider-description-text {
+    font-size: 1.2rem;
+    word-wrap: break-word;
+}
