@@ -1,0 +1,46 @@
+.filter-container {
+    display: flex;
+    flex-direction: column;
+    min-width: 220px;
+    gap: 16px;
+    position: relative;
+}
+.filter-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px
+}
+.filter-wrapper-text {
+    font-size: 1.6rem;
+}
+.filter-wrapper-button {
+    background-color: transparent;
+    justify-content: center;
+    display: flex;
+}
+.filter-wrapper-button svg {
+    padding-top: 5px;
+}
+.filter-inner-wrapper {
+    position: absolute;
+    top: calc(100% + 8px); 
+    left: 0;
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+
+}
+.filter-inner-wrapper.expanded {
+    display: flex;
+}
+
+.filter-input-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px
+}
+.filter-input-label {
+    font-size: 1.6rem;
+}
