@@ -5,6 +5,8 @@
     align-items: center;
     min-width: 220px;
     min-height: 30px;
+    justify-content: space-between;
+    padding: 0 40px;
 }
 .input-container-field{
     text-align: center;

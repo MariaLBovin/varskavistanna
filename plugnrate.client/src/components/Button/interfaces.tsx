@@ -1,7 +1,7 @@
- type ButtonVariant = 'primary' | 'secondary';
+ type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
 
  export interface IButtonProps  {
     variant: ButtonVariant,
-    text: string,
+    text?: string,
     onClick: () => void
  }
