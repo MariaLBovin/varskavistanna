@@ -11,6 +11,15 @@
 .button-secondary {
     background-color: var(--secondary-yellow);
 }
+.button-tertiary {
+    min-width: 45px;
+    min-height: 30px;
+    background-color: transparent;
+    border: 1px solid var(--tertriary-blue);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .button-primary:hover {
     background-color: var(--primary-hover);
     border-color: none;

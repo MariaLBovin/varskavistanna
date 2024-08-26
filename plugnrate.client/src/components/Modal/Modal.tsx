@@ -42,9 +42,12 @@ const Modal = ({children, isOpen, onClose, titleId, descriptionId}: ModalProps) 
         <div className="modal-container-inner"
         ref={modalRef}
         onClick={(e) => e.stopPropagation}
-        >
-            <Button variant={"primary"} text={"Stäng"} onClick={onClose}></Button>
-            {children}</div>
+        >   
+            <div className="modal-close-button">
+                <Button variant={"tertiary"} onClick={onClose}></Button>
+            </div>
+            <div className="modal-inner-children">{children}</div>
+        </div>
     </div>
   )
 }
