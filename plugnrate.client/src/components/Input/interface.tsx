@@ -1,8 +1,12 @@
-import { ForwardedRef } from "react";
+import { ChangeEvent, ForwardedRef } from "react";
 
 export interface IInputProps {
     label?: string,
     placeholder: string,
-    onSubmit: (address: string) => void,
+    value? :string,
+    onSubmit: (value: string) => void,
+    onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
     ref: ForwardedRef<HTMLInputElement>
+    readOnly?:boolean
+    onClick?: () => void
 }

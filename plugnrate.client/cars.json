@@ -1,0 +1,1273 @@
+{
+    "cars": {
+        "Tesla": [
+            {
+            "model": "Model 3",
+            "battery": "57.5",
+            "range": "415",
+            "charge_time": "25"
+            },
+            {
+                "model": "Model 3 Long range",
+                "battery": "75.0",
+                "range": "500",
+                "charge_time": "27"
+            },
+            {
+                "model": "Model Y 2022 Long range",
+                "battery": "75.0",
+                "range": "435",
+                "charge_time": "27"
+            },
+            {
+                "model": "Model Y 2022",
+                "battery": "57.5",
+                "range": "460",
+                "charge_time": "27"
+            },
+            {
+                "model": "Model Y Performace",
+                "battery": "75.0",
+                "range": "415",
+                "charge_time": "30"
+            },
+            {
+                "model": "Model S Plaid",
+                "battery": "95.0",
+                "range": "560",
+                "charge_time": "30"
+            },
+            {
+                "model": "Model S Dual Motor",
+                "battery": "95.0",
+                "range": "575",
+                "charge_time": "30"
+            },
+            {
+                "model": "Model Y 2023",
+                "battery": "57.5",
+                "range": "350",
+                "charge_time": "18"
+            },
+            {
+                "model": "Model X Dual Motor",
+                "battery": "95.0",
+                "range": "475",
+                "charge_time": "30"
+            },
+            {
+                "model": "Model X Plaid",
+                "battery": "95.0",
+                "range": "455",
+                "charge_time": "30"
+            }
+        ],
+       "Volkswagen":  [
+                {
+                    "model": "ID.Buzz NWB GTX",
+                    "battery": "79",
+                    "range": "335",
+                    "charge_time": "26"
+                },
+                {
+                    "model": "ID.3 GTX Performance",
+                    "battery": "79",
+                    "range": "460",
+                    "charge_time": "26"
+                },
+                {
+                    "model": "ID.Buzz LWG GTX",
+                    "battery": "86",
+                    "range": "355",
+                    "charge_time": "26"
+                },
+                {
+                    "model": "ID.Buzz NWB Pro",
+                    "battery": "79",
+                    "range": "360",
+                    "charge_time": "26"
+                },
+                {
+                    "model": "ID.7 Pro S",
+                    "battery": "86",
+                    "range": "525",
+                    "charge_time": "26"
+                },
+                {
+                    "model": "ID.3 Pro",
+                    "battery": "59",
+                    "range": "360",
+                    "charge_time": "25"
+                },
+                {
+                    "model": "ID.7 Tourer Pro S",
+                    "battery": "86",
+                    "range": "515",
+                    "charge_time": "26"
+                },
+                {
+                    "model": "ID.7 Tourer GTX",
+                    "battery": "86",
+                    "range": "475",
+                    "charge_time": "26"
+                },
+                {
+                    "model": "ID.5 Pro",
+                    "battery": "77",
+                    "range": "455",
+                    "charge_time": "28"
+                },
+                {
+                    "model": "ID.7 Tourer Pro",
+                    "battery": "77",
+                    "range": "465",
+                    "charge_time": "27"
+                },
+                {
+                    "model": "ID.3 Pro S",
+                    "battery": "77",
+                    "range": "450",
+                    "charge_time": "28"
+                },
+                {
+                    "model": "ID.4 Pure",
+                    "battery": "52",
+                    "range": "285",
+                    "charge_time": "33"
+                },
+                {
+                    "model": "ID.Buzz LWB Pro",
+                    "battery": "86",
+                    "range": "370",
+                    "charge_time": "26"
+                },
+                {
+                    "model": "ID.3 GTX",
+                    "battery": "79",
+                    "range": "460",
+                    "charge_time": "26"
+                },
+                {
+                    "model": "ID.Buzz LWB GTX",
+                    "battery": "86",
+                    "range": "355",
+                    "charge_time": "26"
+                },
+                {
+                    "model": "ID.3 Pure",
+                    "battery": "52",
+                    "range": "320",
+                    "charge_time": "26"
+                },
+                {
+                    "model": "ID.4 GTX",
+                    "battery": "77",
+                    "range": "420",
+                    "charge_time": "28"
+                },
+                {
+                    "model": "ID.7 GTX",
+                    "battery": "86",
+                    "range": "485",
+                    "charge_time": "26"
+                },
+                {
+                    "model": "ID.Buzz NWB Pro",
+                    "battery": "79.0",
+                    "range": "360",
+                    "charge_time": "26"
+                },
+                {
+                    "model": "ID.4 Pro Motion",
+                    "battery": "77.0",
+                    "range": "435",
+                    "charge_time": "28"
+                },
+                {
+                    "model": "ID.5 GTX",
+                    "battery": "77",
+                    "range": "430",
+                    "charge_time": "28"
+                }
+        ],
+        "Audi":[
+            {
+                "model": "Q6 e-tron quattro ",
+                "battery": "94.9",
+                "range": "475",
+                "charge_time": "21"
+            },
+            {
+                "model": "Q8 e-tron 55 quattro",
+                "battery": "106",
+                "range": "505",
+                "charge_time": "33"
+            },
+            {
+                "model": "Q4 e-tron 45",
+                "battery": "77",
+                "range": "420",
+                "charge_time": "28"
+            },
+            {
+                "model": "Q6 e-tron",
+                "battery": "75.8",
+                "range": "395",
+                "charge_time": "22"
+            },
+            {
+                "model": "Q6 e-tron performance",
+                "battery": "94.9",
+                "range": "490",
+                "charge_time": "22"
+            },
+            {
+                "model": "Q8 e-tron Sportback 55 quattro",
+                "battery": "106",
+                "range": "525",
+                "charge_time": "33"
+            },
+            {
+                "model": "Q4 e-tron 55 quattro",
+                "battery": "77",
+                "range": "395",
+                "charge_time": "28"
+            },
+            {
+                "model": "Q8 e-tron 50 quattro",
+                "battery": "89",
+                "range": "425",
+                "charge_time": "27"
+            },
+            {
+                "model": "SQ6 e-tron",
+                "battery": "94.9",
+                "range": "455",
+                "charge_time": "21"
+            },
+            {
+                "model": "e-tron GT S",
+                "battery": "97",
+                "range": "525",
+                "charge_time": "18"
+            },
+            {
+                "model": "SQ8 e-tron",
+                "battery": "106",
+                "range": "455",
+                "charge_time": "33"
+            },
+            {
+                "model": "Q4 e-tron 45 quattro",
+                "battery": "77",
+                "range": "395",
+                "charge_time": "28"
+            },
+            {
+                "model": "Q4 e-tron 35",
+                "battery": "52",
+                "range": "285",
+                "charge_time": "26"
+            },
+            {
+                "model": "Q4 Sportback e-tron 45",
+                "battery": "77",
+                "range": "435",
+                "charge_time": "28"
+            },
+            {
+                "model": "e-tron GT RS",
+                "battery": "97",
+                "range": "505",
+                "charge_time": "18"
+            },
+            {
+                "model": "Q4 Sportback e-tron 35",
+                "battery": "52",
+                "range": "300",
+                "charge_time": "26"
+            },
+            {
+                "model": "e-tron GT RS performance ",
+                "battery": "97",
+                "range": "505",
+                "charge_time": "28"
+            },
+            {
+                "model": "Q4 Sportback e-tron 55 quattro",
+                "battery": "77",
+                "range": "415",
+                "charge_time": "28"
+            },
+            {
+                "model": "  Q4 Sportback e-tron 45 quattro",
+                "battery": "77",
+                "range": "410",
+                "charge_time": "28"
+            },
+            {
+                "model": "SQ8 e-tron Sportback",
+                "battery": "106",
+                "range": "480",
+                "charge_time": "33"
+            }
+        ],
+        "BMW": [
+            {
+                "model": "iX xDrive40",
+                "battery": "71",
+                "range": "360",
+                "charge_time": "31"
+            },
+            {
+                "model": "iX1 xDrive30",
+                "battery": "64.7",
+                "range": "380",
+                "charge_time": "30"
+            },
+            {
+                "model": "iX3",
+                "battery": "74",
+                "range": "385",
+                "charge_time": "31"
+            },
+            {
+                "model": "iX xDrive50",
+                "battery": "105.2",
+                "range": "505",
+                "charge_time": "31"
+            },
+            {
+                "model": "i4 eDrive40",
+                "battery": "81.3",
+                "range": "515",
+                "charge_time": "27"
+            },
+            {
+                "model": "i5 eDrive40 Sedan",
+                "battery": "81.2",
+                "range": "470",
+                "charge_time": "26"
+            },
+            {
+                "model": "iX1 eDrive20",
+                "battery": "64.7",
+                "range": "390",
+                "charge_time": "30"
+            },
+            {
+                "model": "i7 xDrive60",
+                "battery": "101.7",
+                "range": "510",
+                "charge_time": "28"
+            },
+            {
+                "model": "i4 eDrive35",
+                "battery": "67.1",
+                "range": "430",
+                "charge_time": "31"
+            },
+            {
+                "model": "i4 M50",
+                "battery": "81.3",
+                "range": "450",
+                "charge_time": "27"
+            },
+            {
+                "model": "iX2 eDrive20",
+                "battery": "64.7",
+                "range": "395",
+                "charge_time": "30"
+            },
+            {
+                "model": "i5 eDrive40 Touring",
+                "battery": "81.2",
+                "range": "455",
+                "charge_time": "26"
+            },
+            {
+                "model": "i5 M60 xDrive Sedan",
+                "battery": "81.2",
+                "range": "420",
+                "charge_time": "26"
+            },
+            {
+                "model": "iX2 xDrive30",
+                "battery": "64.7",
+                "range": "385",
+                "charge_time": "30"
+            },
+            {
+                "model": "i7 M70 xDrive",
+                "battery": "101.7",
+                "range": "490",
+                "charge_time": "28"
+            },
+            {
+                "model": "i4 xDrive40",
+                "battery": "81.3",
+                "range": "490",
+                "charge_time": "27"
+            },
+            {
+                "model": "iX M60",
+                "battery": "105.2",
+                "range": "485",
+                "charge_time": "31"
+            },
+            {
+                "model": "i7 eDrive50",
+                "battery": "101.7",
+                "range": "520",
+                "charge_time": "28"
+            },
+            {
+                "model": "i5 xDrive40 Sedan",
+                "battery": "81.2",
+                "range": "455",
+                "charge_time": "26"
+            }
+        ],
+        "Citroen": [
+            {
+                "model": "e-C3",
+                "battery": "44",
+                "range": "260",
+                "charge_time": "32"
+            },
+            {
+                "model": "e-C4",
+                "battery": "46.3",
+                "range": "290",
+                "charge_time": "26"
+            },
+            {
+                "model": "e-C4 X",
+                "battery": "46.3",
+                "range": "285",
+                "charge_time": "26"
+            },
+            {
+                "model": "e-C3 Aircross",
+                "battery": "44",
+                "range": "250",
+                "charge_time": "32"
+            },
+            {
+                "model": "e-C4 X 54kWh",
+                "battery": "50.8",
+                "range": "330",
+                "charge_time": "29"
+            },
+            {
+                "model": "e-C4 64kWh",
+                "battery": "50.8",
+                "range": "330",
+                "charge_time": "29"
+            },
+            {
+                "model": "e-Berlingo M 50kWh",
+                "battery": "50",
+                "range": "235",
+                "charge_time": "28"
+            },
+            {
+                "model": "e-Berlingo XL 50kWh",
+                "battery": "50",
+                "range": "230",
+                "charge_time": "28"
+            },
+            {
+                "model": "e-SpaceTourer XL 50kWh",
+                "battery": "46.3",
+                "range": "180",
+                "charge_time": "26"
+            },
+            {
+                "model": "e-SpaceTourer XL 75kWh",
+                "battery": "68",
+                "range": "260",
+                "charge_time": "38"
+            },
+            {
+                "model": "e-SpaceTourer M 75kWh",
+                "battery": "68",
+                "range": "260",
+                "charge_time": "38"
+            },
+            {
+                "model": "e-SpaceTourer M 50kWh",
+                "battery": "46.3",
+                "range": "180",
+                "charge_time": "26"
+            }
+        ],
+        "Mercedes Benz": [
+            {
+                "model": "EQB 250",
+                "battery": "70.5",
+                "range": "415",
+                "charge_time": "35"
+            },
+            {
+                "model": "EQS 450",
+                "battery": "118",
+                "range": "690",
+                "charge_time": "33"
+            },
+            {
+                "model": "EQA 250",
+                "battery": "66.5",
+                "range": "395",
+                "charge_time": "29"
+            },
+            {
+                "model": "EQA 250+",
+                "battery": "70.5",
+                "range": "420",
+                "charge_time": "35"
+            },
+            {
+                "model": "EQE 350+",
+                "battery": "96",
+                "range": "555",
+                "charge_time": "30"
+            },
+            {
+                "model": "EQB 350 4MATIC",
+                "battery": "66.5",
+                "range": "345",
+                "charge_time": "29"
+            },
+            {
+                "model": "EQE 300",
+                "battery": "89",
+                "range": "525",
+                "charge_time": "33"
+            },
+            {
+                "model": "EQS SUV Maybach 680 ",
+                "battery": "118",
+                "range": "490",
+                "charge_time": "33"
+            },
+            {
+                "model": "G 580",
+                "battery": "116",
+                "range": "360",
+                "charge_time": "34"
+            },
+            {
+                "model": "EQS 450 4MATIC",
+                "battery": "118",
+                "range": "660",
+                "charge_time": "33"
+            },
+            {
+                "model": "EQE 350 4MATIC",
+                "battery": "90.6",
+                "range": "515",
+                "charge_time": "28"
+            },
+            {
+                "model": "EQE SUV 300",
+                "battery": "90.6",
+                "range": "450",
+                "charge_time": "28"
+            },
+            {
+                "model": "EQS SUV 580 4MATIC ",
+                "battery": "118",
+                "range": "530",
+                "charge_time": "33"
+            },
+            {
+                "model": "EQE SUV 350 4MATIC",
+                "battery": "90.6",
+                "range": "435",
+                "charge_time": "28"
+            },
+            {
+                "model": "EQS SUV 450+",
+                "battery": "118",
+                "range": "540",
+                "charge_time": "33"
+            },
+            {
+                "model": "EQA 350 4MATIC",
+                "battery": "66.5",
+                "range": "350",
+                "charge_time": "29"
+            },
+            {
+                "model": "EQS SUV 450 4MATIC",
+                "battery": "118",
+                "range": "530",
+                "charge_time": "33"
+            },
+            {
+                "model": "EQS 580 4MATIC",
+                "battery": "118",
+                "range": "640",
+                "charge_time": "33"
+            },
+            {
+                "model": "EQS AMG 53 4MATIC",
+                "battery": "118",
+                "range": "585",
+                "charge_time": "33"
+            },
+            {
+                "model": "EQA 300 4MATIC",
+                "battery": "66.5",
+                "range": "350",
+                "charge_time": "29"
+            },
+            {
+                "model": "EQV 300 Extra-Long",
+                "battery": "90",
+                "range": "315",
+                "charge_time": "41"
+            },
+            {
+                "model": "EQE SUV 350+",
+                "battery": "96",
+                "range": "475",
+                "charge_time": "30"
+            },
+            {
+                "model": "eVito Tourer Long 90kWh",
+                "battery": "90",
+                "range": "320",
+                "charge_time": "41"
+            },
+            {
+                "model": "EQE SUV 500 4MATIC",
+                "battery": "96",
+                "range": "455",
+                "charge_time": "30"
+            },
+            {
+                "model": "EQT 200 Standard",
+                "battery": "45",
+                "range": "225",
+                "charge_time": "40"
+            },
+            {
+                "model": "EQS 500 4MATIC",
+                "battery": "118",
+                "range": "645",
+                "charge_time": "33"
+            },
+            {
+                "model": "EQE SUV AMG 43 4MATIC",
+                "battery": "90.6",
+                "range": "415",
+                "charge_time": "28"
+            },
+            {
+                "model": "EQE 500 4MATIC",
+                "battery": "90.6",
+                "range": "505",
+                "charge_time": "28"
+            },
+            {
+                "model": "EQE SUV AMG 53 4MATIC+",
+                "battery": "90.6",
+                "range": "410",
+                "charge_time": "28"
+            },
+            {
+                "model": "EQE AMG 43 4MATIC",
+                "battery": "90.6",
+                "range": "450",
+                "charge_time": "28"
+            },
+            {
+                "model": "EQE AMG 53 4MATIC",
+                "battery": "90.6",
+                "range": "450",
+                "charge_time": "28"
+            },
+            {
+                "model": "EQE AMG 43 4MATIC+",
+                "battery": "90.6",
+                "range": "450",
+                "charge_time": "28"
+            },
+            {
+                "model": "eVito Tourer Long 60kWh",
+                "battery": "60",
+                "range": "220",
+                "charge_time": "44"
+            },
+            {
+                "model": "eVito Tourer Extra-Long 60kWh",
+                "battery": "60",
+                "range": "215",
+                "charge_time": "44"
+            },
+            {
+                "model": "EQV 250 Extra-Long",
+                "battery": "60",
+                "range": "210",
+                "charge_time": "44"
+            },
+            {
+                "model": "EQT 200 Long",
+                "battery": "45",
+                "range": "220",
+                "charge_time": "40"
+            },
+            {
+                "model": "EQV 250 Long",
+                "battery": "60",
+                "range": "215",
+                "charge_time": "44"
+            }
+        ],
+        "Porsche": [
+            {
+                "model": "Macan 4 Electric",
+                "battery": "95",
+                "range": "485",
+                "charge_time": "21"
+            },
+            {
+                "model": "Taycan Plus",
+                "battery": "97",
+                "range": "560",
+                "charge_time": "18"
+            },
+            {
+                "model": "Macan Electric",
+                "battery": "95",
+                "range": "510",
+                "charge_time": "21"
+            },
+            {
+                "model": "Taycan",
+                "battery": "82.3",
+                "range": "485",
+                "charge_time": "19"
+            },
+            {
+                "model": "Taycan Turbo GT",
+                "battery": "97",
+                "range": "475",
+                "charge_time": "18"
+            },
+            {
+                "model": "Macan 4S Electric",
+                "battery": "95",
+                "range": "485",
+                "charge_time": "21"
+            },
+            {
+                "model": "Taycan Turbo S",
+                "battery": "97",
+                "range": "500",
+                "charge_time": "18"
+            },
+            {
+                "model": "Taycan 4S Plus",
+                "battery": "97",
+                "range": "550",
+                "charge_time": "18"
+            },
+            {
+                "model": "Macan Turbo Electric",
+                "battery": "95",
+                "range": "470",
+                "charge_time": "21"
+            },
+            {
+                "model": "Taycan 4 Cross Turismo",
+                "battery": "97",
+                "range": "505",
+                "charge_time": "18"
+            },
+            {
+                "model": "Taycan Turbo GT Weissach",
+                "battery": "97",
+                "range": "475",
+                "charge_time": "18"
+            },
+            {
+                "model": "Taycan 4S",
+                "battery": "82.3",
+                "range": "475",
+                "charge_time": "19"
+            },
+            {
+                "model": "Taycan Turbo",
+                "battery": "97",
+                "range": "520",
+                "charge_time": "18"
+            },
+            {
+                "model": "Taycan Plus Sport Turismo",
+                "battery": "97",
+                "range": "515",
+                "charge_time": "18"
+            },
+            {
+                "model": "Taycan 4S Cross Turismo",
+                "battery": "97",
+                "range": "505",
+                "charge_time": "18"
+            },
+            {
+                "model": "Taycan Sport Turismo",
+                "battery": "82.3",
+                "range": "445",
+                "charge_time": "19"
+            },
+            {
+                "model": "Taycan Turbo Cross Turismo",
+                "battery": "97",
+                "range": "495",
+                "charge_time": "18"
+            },
+            {
+                "model": "Taycan Turbo S Cross Turismo",
+                "battery": "97",
+                "range": "475",
+                "charge_time": "18"
+            },
+            {
+                "model": "Taycan Turbo Sport Turismo",
+                "battery": "97",
+                "range": "470",
+                "charge_time": "18"
+            },
+            {
+                "model": "Taycan 4S Sport Turismo",
+                "battery": "82.3",
+                "range": "430",
+                "charge_time": "19"
+            },
+            {
+                "model": "Taycan Turbo S Sport Turismo",
+                "battery": "97",
+                "range": "460",
+                "charge_time": "18"
+            },
+            {
+                "model": "Taycan 4S Plus Sport Turismo",
+                "battery": "97",
+                "range": "495",
+                "charge_time": "18"
+            }
+        ],
+        "Volvo": [
+        {
+            "model": "XC40 Recharge",
+            "battery": "78.0 kWh",
+            "range": "418 km",
+            "charge_time": "32"
+        },
+        {
+            "model": "C40 Recharge",
+            "battery": "78.0 kWh",
+            "range": "438 km",
+            "charge_time": "32"
+        },
+        {
+            "model": "EX90",
+            "battery": "111.0 kWh",
+            "range": "up to 600 km",
+            "charge_time": "30"
+        },
+        {
+            "model": "EX30",
+            "battery": "69.0 kWh",
+            "range": "up to 480 km",
+            "charge_time": "26"
+        }
+    ],
+    "Polestar": [
+        {
+            "model": "2 Standard Range Single Motor",
+            "battery": "69.0 kWh",
+            "range": "474 km",
+            "charge_time": "33"
+        },
+        {
+            "model": "2 Long Range Single Motor",
+            "battery": "82.0 kWh",
+            "range": "542 km",
+            "charge_time": "28"
+        },
+        {
+            "model": "2 Long Range Dual Motor",
+            "battery": "82.0 kWh",
+            "range": "482 km",
+            "charge_time": "28"
+        },
+        {
+            "model": "3",
+            "battery": "111.0 kWh",
+            "range": "up to 610 km",
+            "charge_time": "30"
+        },
+        {
+            "model": "4",
+            "battery": "102.0 kWh",
+            "range": "up to 600 km",
+            "charge_time": "32"
+        }
+    ],"Cupra": [
+        {
+            "model": "Born 45",
+            "battery": "45.0 kWh",
+            "range": "349 km",
+            "charge_time": "35"
+        },
+        {
+            "model": "Born 58",
+            "battery": "58.0 kWh",
+            "range": "424 km",
+            "charge_time": "35"
+        },
+        {
+            "model": "Born 77",
+            "battery": "77.0 kWh",
+            "range": "540 km",
+            "charge_time": "35"
+        },
+        {
+            "model": "Tavascan",
+            "battery": "77.0 kWh",
+            "range": "up to 550 km",
+            "charge_time": "30"
+        }
+    ],
+    "Ford": [
+        {
+            "model": "Mustang Mach-E Standard Range RWD",
+            "battery": "70.0 kWh",
+            "range": "440 km",
+            "charge_time": "38"
+        },
+        {
+            "model": "Mustang Mach-E Standard Range AWD",
+            "battery": "70.0 kWh",
+            "range": "400 km",
+            "charge_time": "38"
+        },
+        {
+            "model": "Mustang Mach-E Extended Range RWD",
+            "battery": "91.0 kWh",
+            "range": "610 km",
+            "charge_time": "45"
+        },
+        {
+            "model": "Mustang Mach-E Extended Range AWD",
+            "battery": "91.0 kWh",
+            "range": "540 km",
+            "charge_time": "45"
+        },
+        {
+            "model": "Mustang Mach-E GT",
+            "battery": "91.0 kWh",
+            "range": "500 km",
+            "charge_time": "45"
+        },
+        {
+            "model": "F-150 Lightning Standard Range",
+            "battery": "98.0 kWh",
+            "range": "386 km",
+            "charge_time": "44"
+        },
+        {
+            "model": "F-150 Lightning Extended Range",
+            "battery": "131.0 kWh",
+            "range": "515 km",
+            "charge_time": "41"
+        },
+        {
+            "model": "E-Transit",
+            "battery": "68.0 kWh",
+            "range": "200 km",
+            "charge_time": "34"
+        }
+    ],"Hyundai": [
+        {
+            "model": "Kona Electric Standard Range",
+            "battery": "39.2 kWh",
+            "range": "305 km",
+            "charge_time": "54"
+        },
+        {
+            "model": "Kona Electric Long Range",
+            "battery": "64.0 kWh",
+            "range": "484 km",
+            "charge_time": "47"
+        },
+        {
+            "model": "Ioniq 5 SE Standard Range",
+            "battery": "58.0 kWh",
+            "range": "400 km",
+            "charge_time": "18"
+        },
+        {
+            "model": "Ioniq 5 SEL/ Limited",
+            "battery": "77.4 kWh",
+            "range": "614 km",
+            "charge_time": "18"
+        },
+        {
+            "model": "Ioniq 6 SE",
+            "battery": "77.4 kWh",
+            "range": "614 km",
+            "charge_time": "18"
+        },
+        {
+            "model": "Ioniq 6 Limited",
+            "battery": "77.4 kWh",
+            "range": "614 km",
+            "charge_time": "18"
+        },
+        {
+            "model": "Ioniq Electric",
+            "battery": "38.3 kWh",
+            "range": "311 km",
+            "charge_time": "54"
+        },
+        {
+            "model": "Ioniq Electric Long Range",
+            "battery": "64.0 kWh",
+            "range": "614 km",
+            "charge_time": "54"
+        }
+    ],"Kia": [
+        {
+            "model": "Soul EV",
+            "battery": "64.0 kWh",
+            "range": "452 km",
+            "charge_time": "42"
+        },
+        {
+            "model": "Niro EV",
+            "battery": "64.0 kWh",
+            "range": "455 km",
+            "charge_time": "43"
+        },
+        {
+            "model": "EV6 Standard Range",
+            "battery": "58.0 kWh",
+            "range": "400 km",
+            "charge_time": "18"
+        },
+        {
+            "model": "EV6 Long Range",
+            "battery": "77.4 kWh",
+            "range": "528 km",
+            "charge_time": "18"
+        },
+        {
+            "model": "EV9",
+            "battery": "77.4 kWh",
+            "range": "up to 400 km",
+            "charge_time": "30"
+        }
+    ],"Opel": [
+        {
+            "model": "Mokka-e",
+            "battery": "50.0 kWh",
+            "range": "338 km",
+            "charge_time": "30"
+        },
+        {
+            "model": "Corsa-e",
+            "battery": "50.0 kWh",
+            "range": "359 km",
+            "charge_time": "30"
+        },
+        {
+            "model": "Astra-e",
+            "battery": "54.0 kWh",
+            "range": "up to 420 km",
+            "charge_time": "30"
+        },
+        {
+            "model": "Combo-e",
+            "battery": "50.0 kWh",
+            "range": "280 km",
+            "charge_time": "30"
+        },
+        {
+            "model": "Vivaro-e",
+            "battery": "75.0 kWh",
+            "range": "330 km",
+            "charge_time": "30"
+        }
+    ],
+     "Nissan": [
+        {
+            "model": "Leaf",
+            "battery": "40.0 kWh",
+            "range": "270 km",
+            "charge_time": "40"
+        },
+        {
+            "model": "Leaf e+",
+            "battery": "62.0 kWh",
+            "range": "385 km",
+            "charge_time": "60"
+        },
+        {
+            "model": "Ariya 63 kWh",
+            "battery": "63.0 kWh",
+            "range": "up to 400 km",
+            "charge_time": "35"
+        },
+        {
+            "model": "Ariya 87 kWh",
+            "battery": "87.0 kWh",
+            "range": "up to 500 km",
+            "charge_time": "35"
+        }
+    ],
+    "Peugeot": [
+        {
+            "model": "e-208",
+            "battery": "50.0 kWh",
+            "range": "345 km",
+            "charge_time": "30"
+        },
+        {
+            "model": "e-2008",
+            "battery": "50.0 kWh",
+            "range": "320 km",
+            "charge_time": "30"
+        },
+        {
+            "model": "e-Partner",
+            "battery": "50.0 kWh",
+            "range": "275 km",
+            "charge_time": "30"
+        },
+        {
+            "model": "e-Traveller",
+            "battery": "75.0 kWh",
+            "range": "330 km",
+            "charge_time": "30"
+        },
+        {
+            "model": "e-Boxer",
+            "battery": "70.0 kWh",
+            "range": "245 km",
+            "charge_time": "45"
+        }
+    ],"Renault": [
+        {
+            "model": "Zoe",
+            "battery": "52.0 kWh",
+            "range": "395 km",
+            "charge_time": "30"
+        },
+        {
+            "model": "Zoe Van",
+            "battery": "52.0 kWh",
+            "range": "395 km",
+            "charge_time": "30"
+        },
+        {
+            "model": "Megane E-Tech Electric",
+            "battery": "60.0 kWh",
+            "range": "470 km",
+            "charge_time": "30"
+        },
+        {
+            "model": "Megane E-Tech Electric (40 kWh)",
+            "battery": "40.0 kWh",
+            "range": "300 km",
+            "charge_time": "30"
+        },
+        {
+            "model": "Twingo Electric",
+            "battery": "22.0 kWh",
+            "range": "190 km",
+            "charge_time": "30"
+        },
+        {
+            "model": "Kangoo E-Tech Electric",
+            "battery": "45.0 kWh",
+            "range": "300 km",
+            "charge_time": "30"
+        },
+        {
+            "model": "Trafic E-Tech Electric",
+            "battery": "52.0 kWh",
+            "range": "300 km",
+            "charge_time": "30)"
+        }
+    ],
+    "Skoda": [
+        {
+            "model": "Enyaq iV 50",
+            "battery": "55.0 kWh",
+            "range": "360 km",
+            "charge_time": "38"
+        },
+        {
+            "model": "Enyaq iV 60",
+            "battery": "62.0 kWh",
+            "range": "410 km",
+            "charge_time": "38"
+        },
+        {
+            "model": "Enyaq iV 80",
+            "battery": "82.0 kWh",
+            "range": "540 km",
+            "charge_time": "38"
+        },
+        {
+            "model": "Enyaq iV 80x",
+            "battery": "82.0 kWh",
+            "range": "520 km",
+            "charge_time": "38"
+        },
+        {
+            "model": "Enyaq iV vRS",
+            "battery": "82.0 kWh",
+            "range": "500 km",
+            "charge_time": "38"
+        },
+        {
+            "model": "Citigo-e iV",
+            "battery": "36.8 kWh",
+            "range": "265 km",
+            "charge_time": "30"
+        }
+    ],
+    "Toyota": [
+        {
+            "model": "bZ4X",
+            "battery": "71.4 kWh",
+            "range": "500 km",
+            "charge_time": "30"
+        },
+        {
+            "model": "bZ4X AWD",
+            "battery": "71.4 kWh",
+            "range": "460 km",
+            "charge_time": "30"
+        },
+        {
+            "model": "bZ3",
+            "battery": "64.0 kWh",
+            "range": "up to 600 km",
+            "charge_time": "30"
+        },
+        {
+            "model": "bZ4X 2024 (EU)",
+            "battery": "71.4 kWh",
+            "range": "460 km",
+            "charge_time": "30"
+        }
+    ]
+    }
+}

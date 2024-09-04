@@ -12,7 +12,10 @@ export const fetchChargingStations = async (latitude: number, longitude: number)
             maxresults: 10,
             key: API_KEY
         }
+        
+        
     });
+    console.log(response.data);
     return response.data;
 
 }
