@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, useRef, useEffect, ChangeEvent } from "react";
+import React, { useState, useRef, ChangeEvent } from "react";
 import { Autocomplete, useJsApiLoader } from "@react-google-maps/api";
 import Button from "../components/Button/Button";
 import Input from "../components/Input/Input";
 import MapsComponent from "../components/Map/MapsComponent";
 import { fetchCarsByBrand } from "../services/getData";
 import { SelectOption } from "../components/Select/interface";
-import { fetchAndSetRouteData } from "../services/routeData";
+import { fetchAndSetRouteData } from "../utils/calculateRouteData";
 import { Car } from "../interfaces/cars";
 import CarModal from "./CarModal";
 
@@ -16,10 +16,12 @@ const RouteHandler: React.FC = () => {
   const [distance, setDistance] = useState<string>("");
   const [duration, setDuration] = useState<string>("");
   const [isCarModalOpen, setIsCarModalOpen] = useState<boolean>(false);
-  const [brands, setBrands] = useState<SelectOption[]>([]);
-
+  const [models, setModels] = useState<SelectOption[]>([]);
   const [selectedModel, setSelectedModel] = useState<string>("");
   const [brand, setBrand] = useState("");
+  const [selectedCarDetails, setSelectedCarDetails] = useState<Car | null>(
+    null
+  );
 
   const originRef = useRef<HTMLInputElement | null>(null);
   const destinationRef = useRef<HTMLInputElement | null>(null);
@@ -35,40 +37,16 @@ const RouteHandler: React.FC = () => {
     return <div>Laddar...</div>;
   }
 
-  const calculateRoute = async () => {
-    const origin = originRef.current?.value;
-    const destination = destinationRef.current?.value;
-
-    if (!origin || !destination) {
-      console.error("Both origin and destination are required.");
-      return;
-    }
-
-    await fetchAndSetRouteData(
-      origin,
-      destination,
-      setDirectionsResponse,
-      setDistance,
-      setDuration
-    );
-  };
-
-  const handleOpenCarModal = () => setIsCarModalOpen(true);
-  const handleCloseCarModal = () => setIsCarModalOpen(false);
-
   const handleBrandSubmit = async (brand: string) => {
-    console.log("testar submit", brand);
-
     try {
       const carModels: Car[] = await fetchCarsByBrand(brand);
+
       const options = carModels.map((car) => ({
         value: car.model,
         label: car.model,
+        range: car.range,
       }));
-      console.log(options);
-
-      setBrands(options);
-      setBrand(brand);
+      setModels(options);
     } catch (error) {
       console.error("Error fetching car models:", error);
     }
@@ -77,14 +55,63 @@ const RouteHandler: React.FC = () => {
   const handleModelChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const selectedModel = event.target.value;
     setSelectedModel(selectedModel);
+
+    const modelDetails = models.find((brand) => brand.value === selectedModel);
+
+    if (modelDetails) {
+      setSelectedCarDetails(modelDetails as unknown as Car);
+    } else {
+      console.error("Model details not found.");
+    }
   };
+  const calculateRoute = async () => {
+    const origin = originRef.current?.value;
+    const destination = destinationRef.current?.value;
+
+    if (!origin || !destination || !selectedCarDetails) {
+      console.error("Both origin and destination are required.");
+      return;
+    }
+
+    const rangeNumber = parseFloat(selectedCarDetails.range);
+
+    if (isNaN(rangeNumber)) {
+      console.error("Car range could not be converted to a number.");
+      return;
+    }
+
+    let calculatedDistance = "";
+    let calculatedDuration = "";
+
+    await fetchAndSetRouteData(
+      origin,
+      destination,
+      setDirectionsResponse,
+      (distance: string) => {
+        calculatedDistance = distance;
+        setDistance(distance);
+      },
+      (duration: string) => {
+        calculatedDuration = duration;
+        setDuration(duration);
+      },
+      rangeNumber 
+    );
+
+    console.log("Route calculation finished.");
+  };
+
+  const handleOpenCarModal = () => setIsCarModalOpen(true);
+  const handleCloseCarModal = () => setIsCarModalOpen(false);
 
   const handleSaveCar = () => {
     setIsCarModalOpen(false);
   };
+
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setBrand(event.target.value);
   };
+
   return (
     <div>
       <MapsComponent
@@ -108,7 +135,7 @@ const RouteHandler: React.FC = () => {
       <Input
         placeholder='Sök bilmodell'
         onClick={handleOpenCarModal}
-        value={selectedModel}
+        value={`${brand} ${selectedModel}`}
         readOnly
         onChange={() => {}}
         onSubmit={() => {}}
@@ -117,7 +144,7 @@ const RouteHandler: React.FC = () => {
         isOpen={isCarModalOpen}
         onClose={handleCloseCarModal}
         onBrandSubmit={handleBrandSubmit}
-        brands={brands}
+        brands={models}
         selectedModel={selectedModel}
         onSave={handleSaveCar}
         searchValue={brand}
