@@ -9,6 +9,7 @@ import { SelectOption } from "../components/Select/interface";
 import { fetchAndSetRouteData } from "../utils/calculateRouteData";
 import { Car } from "../interfaces/cars";
 import CarModal from "./CarModal";
+import { findNearestChargingStations } from "../utils/calculateClosetsCharger";
 
 const RouteHandler: React.FC = () => {
   const [directionsResponse, setDirectionsResponse] =
@@ -22,6 +23,12 @@ const RouteHandler: React.FC = () => {
   const [selectedCarDetails, setSelectedCarDetails] = useState<Car | null>(
     null
   );
+  const [chargingStations, setChargingStations] = useState<
+    google.maps.LatLngLiteral[]
+  >([]);
+  const [nearestChargingStations, setNearestChargingStations] = useState<
+    google.maps.LatLngLiteral[]
+  >([]);
 
   const originRef = useRef<HTMLInputElement | null>(null);
   const destinationRef = useRef<HTMLInputElement | null>(null);
@@ -82,6 +89,7 @@ const RouteHandler: React.FC = () => {
 
     let calculatedDistance = "";
     let calculatedDuration = "";
+    let calculatedChargingStations: google.maps.LatLngLiteral[] = [];
 
     await fetchAndSetRouteData(
       origin,
@@ -95,10 +103,12 @@ const RouteHandler: React.FC = () => {
         calculatedDuration = duration;
         setDuration(duration);
       },
-      rangeNumber 
+      rangeNumber,
+      (stations: google.maps.LatLngLiteral[]) => {
+        calculatedChargingStations = stations;
+        setChargingStations(stations);
+      }
     );
-
-    console.log("Route calculation finished.");
   };
 
   const handleOpenCarModal = () => setIsCarModalOpen(true);
@@ -117,6 +127,7 @@ const RouteHandler: React.FC = () => {
       <MapsComponent
         directionsResponse={directionsResponse}
         center={{ lat: 48.8584, lng: 2.2945 }}
+        chargingStations={chargingStations}
       />
       <Autocomplete>
         <Input

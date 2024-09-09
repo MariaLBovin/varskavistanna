@@ -8,47 +8,42 @@ export const calculateChargingStops = (
   const stops: number[] = [];
   let currentBattery = batteryStart;
   let remainingDistance = routeDistance;
+  let isFirstStop = true;
 
-  console.log(`Startar uträkning för laddstopp`);
-  console.log(
-    `Totalt avstånd: ${routeDistance} km, Bilens räckvidd: ${carRange} km`
-  );
-  console.log(
-    `Batteri startnivå: ${batteryStart}%, Minsta batterinivå: ${minBattery}%, Ladda till: ${chargeTo}%`
-  );
+  const calculateRange = (isFirstStop: boolean) => {
+    if (isFirstStop) {
+      return carRange * Math.min((batteryStart - minBattery) / 100);
+    } else {
+      return carRange * Math.min((chargeTo - minBattery) / 100);
+    }
+  };
 
   while (remainingDistance > 0) {
-    const rangeWithCurrentBattery =
-      ((currentBattery - minBattery) / (batteryStart - minBattery)) * carRange;
+    const range = calculateRange(isFirstStop);
+    isFirstStop = false;
 
-    console.log(
-      `Nuvarande batterinivå: ${currentBattery}%, Räckvidd på denna laddning: ${rangeWithCurrentBattery.toFixed(
-        2
-      )} km`
-    );
-    console.log(`Kvarvarande avstånd: ${remainingDistance} km`);
+    // console.log(
+    //   `Remaining distance: ${remainingDistance}, Calculated range: ${range}`
+    // );
 
-    if (remainingDistance <= rangeWithCurrentBattery) {
-      console.log(
-        `Bilen kan klara resterande avstånd på ${remainingDistance} km utan fler laddstopp`
-      );
-      break;
+    if (remainingDistance <= range) {
+      if (stops.length === 0 || stops[stops.length - 1] !== routeDistance) {
+        break;
+      }
+      remainingDistance = 0;
+    } else {
+      const stopPosition = routeDistance - remainingDistance + range;
+      stops.push(stopPosition);
+      remainingDistance -= range;
+      currentBattery = chargeTo;
     }
-
-    const stopPosition =
-      routeDistance - remainingDistance + rangeWithCurrentBattery;
-    stops.push(stopPosition);
-    console.log(`Laddstopp vid: ${stopPosition.toFixed(2)} km`);
-
-    remainingDistance -= rangeWithCurrentBattery;
-    currentBattery = chargeTo;
-    console.log(
-      `Laddar bilen till ${chargeTo}%, Kvarvarande avstånd efter laddning: ${remainingDistance.toFixed(
-        2
-      )} km`
-    );
+    // console.log(stops, range);
   }
 
-  console.log(`Totalt antal laddstopp: ${stops.length}`);
-  return { stops: stops, remainingBattery: currentBattery };
+  const finalBatteryLevel = Math.max(
+    currentBattery - (remainingDistance / carRange) * 100,
+    minBattery
+  );
+  // console.log(`Final battery level after the trip: ${finalBatteryLevel}%`);
+  return { stops: stops, remainingBattery: finalBatteryLevel };
 };
