@@ -10,6 +10,7 @@ import { fetchAndSetRouteData } from "../utils/calculateRouteData";
 import { Car } from "../interfaces/cars";
 import CarModal from "./CarModal";
 import { findNearestChargingStations } from "../utils/calculateClosetsCharger";
+import Filter from "../components/Filter/Filter";
 
 const RouteHandler: React.FC = () => {
   const [directionsResponse, setDirectionsResponse] =
@@ -162,6 +163,7 @@ const RouteHandler: React.FC = () => {
         handleInputChange={handleInputChange}
         onModelChange={handleModelChange}
       />
+
       <Button variant={"primary"} text={"Sök"} onClick={calculateRoute} />
     </div>
   );
