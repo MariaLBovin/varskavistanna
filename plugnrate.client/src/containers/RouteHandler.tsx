@@ -6,10 +6,10 @@ import Input from "../components/Input/Input";
 import MapsComponent from "../components/Map/MapsComponent";
 import { fetchCarsByBrand } from "../services/getData";
 import { SelectOption } from "../components/Select/interface";
-import { fetchAndSetRouteData } from "../utils/calculateRouteData";
 import { Car } from "../interfaces/cars";
 import CarModal from "./CarModal";
 import Filter from "../components/Filter/Filter";
+import { calculateRouteData } from "../utils/calculateRouteData";
 
 const RouteHandler: React.FC = () => {
   const [directionsResponse, setDirectionsResponse] =
@@ -89,7 +89,7 @@ const RouteHandler: React.FC = () => {
     let calculatedDuration = "";
     let calculatedChargingStations: google.maps.LatLngLiteral[] = [];
 
-    await fetchAndSetRouteData(
+    await calculateRouteData(
       origin,
       destination,
       setDirectionsResponse,
@@ -119,7 +119,17 @@ const RouteHandler: React.FC = () => {
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setBrand(event.target.value);
   };
-
+  
+  const handleFilterChange = (selectedOption: string)=> {
+    console.log(selectedOption);
+    
+  }
+  const filterOptions = [
+    { label: "Restaurang", value: "restaurant" },
+    { label: "Toalett", value: "establishment" },
+    { label: "Rastplats", value: "park" },
+    { label: "Köpcentrum", value: "shopping_mall" },
+  ];
   return (
     <div>
       <MapsComponent
@@ -160,7 +170,7 @@ const RouteHandler: React.FC = () => {
         handleInputChange={handleInputChange}
         onModelChange={handleModelChange}
       />
-
+      <Filter options={filterOptions} onChangeEvent={(selectedOption: string) => handleFilterChange(selectedOption)}></Filter>
       <Button variant={"primary"} text={"Sök"} onClick={calculateRoute} />
     </div>
   );
