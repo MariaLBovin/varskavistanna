@@ -57,7 +57,37 @@ app.get('/charging-stations', async (
     res.status(500).send('Error fetching charging stations');
   }
 });
+app.get('/nearby-places', async (req:
+  {query: {latitude: any; longitude: any; radius: any; type: any;};},
+res: {status: (arg0: number) => { (): any; new(): any; send:
+  {(arg0: string): void; new(): any; }; };
+  json: (arg0: any) => void; }) => {
+  const {latitude, longitude, radius, type} = req.query;
 
+  if (!latitude || !longitude || !type) {
+    return res.status(400).send('Latitude, longitude, and type are required');
+  }
+
+  console.log('request with params:', {latitude, longitude, radius, type});
+
+  try {
+    const response = await client.placesNearby({
+      params: {
+        location: `${latitude},${longitude}`,
+        radius: radius || '1500',
+        type: type,
+        key: GOOGLE_API_KEY,
+      },
+      timeout: 1000,
+    });
+
+    console.log('Nearby Places API Response:', response.data.results);
+    res.json(response.data.results);
+  } catch (error) {
+    console.error('Error fetching nearby places:', error);
+    res.status(500).send('Error fetching nearby places');
+  }
+});
 
 exports.api = functions.https.onRequest(app);
 

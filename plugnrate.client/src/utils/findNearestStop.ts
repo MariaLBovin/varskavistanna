@@ -1,4 +1,4 @@
-export const findNearestStation = (
+export const findNearestStop = (
     position: google.maps.LatLngLiteral,
     stations: google.maps.LatLngLiteral[]
   ): google.maps.LatLngLiteral | undefined => {
