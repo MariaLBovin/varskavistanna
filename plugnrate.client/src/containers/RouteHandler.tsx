@@ -26,7 +26,7 @@ const RouteHandler: React.FC = () => {
   const [chargingStations, setChargingStations] = useState<
     google.maps.LatLngLiteral[]
   >([]);
-
+  const [selectedFilter, setSelectedFilter] = useState<string | null>(null)
 
   const originRef = useRef<HTMLInputElement | null>(null);
   const destinationRef = useRef<HTMLInputElement | null>(null);
@@ -105,7 +105,8 @@ const RouteHandler: React.FC = () => {
       (stations: google.maps.LatLngLiteral[]) => {
         calculatedChargingStations = stations;
         setChargingStations(stations);
-      }
+      },
+      selectedFilter,
     );
   };
 
@@ -121,8 +122,7 @@ const RouteHandler: React.FC = () => {
   };
   
   const handleFilterChange = (selectedOption: string)=> {
-    console.log(selectedOption);
-    
+    setSelectedFilter(selectedOption)
   }
   const filterOptions = [
     { label: "Restaurang", value: "restaurant" },
