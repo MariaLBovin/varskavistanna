@@ -2,7 +2,6 @@
 import React, { useState, useRef, ChangeEvent } from "react";
 import { Autocomplete, useJsApiLoader } from "@react-google-maps/api";
 import Button from "../components/Button/Button";
-import Input from "../components/Input/Input";
 import MapsComponent from "../components/Map/MapsComponent";
 import { fetchCarsByBrand } from "../services/getData";
 import { SelectOption } from "../components/Select/interface";
@@ -10,6 +9,7 @@ import { Car } from "../interfaces/cars";
 import CarModal from "./CarModal";
 import Filter from "../components/Filter/Filter";
 import { calculateRouteData } from "../utils/calculateRouteData";
+import Input from "../components/Input/Input";
 
 const RouteHandler: React.FC = () => {
   const [directionsResponse, setDirectionsResponse] =
@@ -26,7 +26,7 @@ const RouteHandler: React.FC = () => {
   const [chargingStations, setChargingStations] = useState<
     google.maps.LatLngLiteral[]
   >([]);
-  const [selectedFilter, setSelectedFilter] = useState<string | null>(null)
+  const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
 
   const originRef = useRef<HTMLInputElement | null>(null);
   const destinationRef = useRef<HTMLInputElement | null>(null);
@@ -69,6 +69,7 @@ const RouteHandler: React.FC = () => {
       console.error("Model details not found.");
     }
   };
+
   const calculateRoute = async () => {
     const origin = originRef.current?.value;
     const destination = destinationRef.current?.value;
@@ -106,7 +107,7 @@ const RouteHandler: React.FC = () => {
         calculatedChargingStations = stations;
         setChargingStations(stations);
       },
-      selectedFilter,
+      selectedFilter
     );
   };
 
@@ -120,16 +121,18 @@ const RouteHandler: React.FC = () => {
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setBrand(event.target.value);
   };
-  
-  const handleFilterChange = (selectedOption: string)=> {
-    setSelectedFilter(selectedOption)
-  }
+
+  const handleFilterChange = (selectedOption: string) => {
+    setSelectedFilter(selectedOption);
+  };
+
   const filterOptions = [
     { label: "Restaurang", value: "restaurant" },
     { label: "Toalett", value: "establishment" },
     { label: "Rastplats", value: "park" },
     { label: "Köpcentrum", value: "shopping_mall" },
   ];
+
   return (
     <div>
       <MapsComponent
@@ -138,26 +141,15 @@ const RouteHandler: React.FC = () => {
         chargingStations={chargingStations}
       />
       <Autocomplete>
-        <Input
-          placeholder='Ange startpunkt'
-          onSubmit={() => {}}
-          ref={originRef}
-        />
+        <Input placeholder="Ange startpunkt" onSubmit={() => {}} ref={originRef} />
       </Autocomplete>
       <Autocomplete>
-        <Input
-          placeholder='Ange slutmål'
-          onSubmit={() => {}}
-          ref={destinationRef}
-        />
+        <Input placeholder="Ange slutmål" onSubmit={() => {}} ref={destinationRef} />
       </Autocomplete>
-      <Input
-        placeholder='Sök bilmodell'
+      <Button
+        variant="tertiary"
+        text={brand && selectedModel ? `${brand} ${selectedModel}` : "Sök bilmodell"}
         onClick={handleOpenCarModal}
-        value={`${brand} ${selectedModel}`}
-        readOnly
-        onChange={() => {}}
-        onSubmit={() => {}}
       />
       <CarModal
         isOpen={isCarModalOpen}
@@ -170,10 +162,14 @@ const RouteHandler: React.FC = () => {
         handleInputChange={handleInputChange}
         onModelChange={handleModelChange}
       />
-      <Filter options={filterOptions} onChangeEvent={(selectedOption: string) => handleFilterChange(selectedOption)}></Filter>
+      <Filter
+        options={filterOptions}
+        onChangeEvent={(selectedOption: string) => handleFilterChange(selectedOption)}
+      />
       <Button variant={"primary"} text={"Sök"} onClick={calculateRoute} />
     </div>
   );
 };
 
 export default RouteHandler;
+
