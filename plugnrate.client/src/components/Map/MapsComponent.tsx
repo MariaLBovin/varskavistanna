@@ -1,4 +1,5 @@
 import { GoogleMap, Marker, DirectionsRenderer } from "@react-google-maps/api";
+import './maps.css'
 
 interface MapsComponentProps {
   directionsResponse: google.maps.DirectionsResult | null;
@@ -15,7 +16,7 @@ const MapsComponent: React.FC<MapsComponentProps> = ({
     <GoogleMap
       center={center}
       zoom={15}
-      mapContainerStyle={{ width: "70vw", height: "30vh" }}
+      mapContainerClassName="maps-container-wrapper"
     >
       <Marker position={center} />
       {directionsResponse && (
