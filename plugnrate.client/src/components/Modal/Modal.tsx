@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { ModalProps } from "./interface";
 import Button from "../Button/Button";
 import "./modal.css";
+import IconX from "../../assets/icons/IconX";
 
 const Modal = ({
   children,
@@ -57,7 +58,8 @@ const Modal = ({
         onClick={(e) => e.stopPropagation}
       >
         <div className='modal-close-button'>
-          <Button variant={"tertiary"} onClick={onClose}></Button>
+          <Button variant={"tertiary"} icon={<IconX/>} onClick={onClose}>
+          </Button>
         </div>
         <div className='modal-inner-children'>{children}</div>
       </div>

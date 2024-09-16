@@ -1,23 +1,21 @@
+import { IButtonProps } from "./interfaces";
+import "./button.css";
 
-import { IButtonProps } from './interfaces'
-import './button.css';
-import IconX from '../../assets/icons/IconX';
-
-const Button = ({variant, text, onClick}:IButtonProps) => {
+const Button = ({ variant, text, icon, onClick }: IButtonProps) => {
   const buttonClass = `button ${
-    variant === 'primary' 
-      ? 'button-primary' 
-      : variant === 'secondary' 
-        ? 'button-secondary' 
-        : 'button-tertiary'
+    variant === "primary"
+      ? "button-primary"
+      : variant === "secondary"
+      ? "button-secondary"
+      : "button-tertiary"
   }`;
-  
 
   return (
     <button className={buttonClass} onClick={onClick}>
-      {variant === 'tertiary' && <IconX/>}
-      {text}</button>
-  )
-}
+      {icon && <span className='button-icon'>{icon}</span>}
+      {text && <span className='button-text'>{text}</span>}
+    </button>
+  );
+};
 
-export default Button
+export default Button;
