@@ -11,10 +11,12 @@ const functions = require('firebase-functions');
 const express = require('express');
 const { Client } = require('@googlemaps/google-maps-services-js');
 const cors = require('cors');
+const axios = require('axios');
 const app = express();
 app.use(cors({ origin: ['https://localhost:5173'] }));
 const client = new Client({});
 const GOOGLE_API_KEY = functions.config().google.apikey;
+const OPENCHARGE_KEY = functions.config().openchargemap.api_key;
 // Middleware och rutter
 app.get('/hello', (req, res) => {
     res.send('Hello from Firebase Cloud Functions with Express!');
@@ -27,17 +29,18 @@ app.get('/charging-stations', async (req, res) => {
     }
     console.log('Received request with params:', { latitude, longitude, radius });
     try {
-        const response = await client.placesNearby({
+        const response = await axios.get('https://api.openchargemap.io/v3/poi/', {
             params: {
-                location: `${latitude},${longitude}`,
-                radius: radius || '1500',
-                type: 'electric_vehicle_charging_station',
-                key: GOOGLE_API_KEY,
+                output: 'json',
+                latitude: latitude,
+                longitude: longitude,
+                maxdistance: radius || 5,
+                maxresults: 50,
+                key: OPENCHARGE_KEY,
             },
-            timeout: 1000,
         });
-        console.log('API Response:', response.data.results);
-        res.json(response.data.results);
+        console.log('API Response:', response.data);
+        res.json(response.data);
     }
     catch (error) {
         console.error('Error fetching charging stations:', error);

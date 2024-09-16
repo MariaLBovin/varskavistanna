@@ -1,23 +1,55 @@
 export interface ChargingStation {
-    business_status?: string;
-    geometry: {
-      location: {
-        lat: number;
-        lng: number;
-      };
+  id: number;
+  AddressInfo: {
+    Title: string;
+    AddressLine1: string;
+    AddressLine2?: string | null;
+    Town: string;
+    StateOrProvince?: string | null;
+    Postcode?: string | null;
+    Country: {
+      ISOCode: string;
+      Title: string;
     };
-    icon?: string;
-    name: string;
-    photos?: Array<{ photo_reference: string }>;
-    place_id: string;
-    plus_code?: {
-      compound_code: string;
-      global_code: string;
+    Latitude: number;
+    Longitude: number;
+  };
+  Connections: Array<{
+    ConnectionType: {
+      Id: number;
+      Title: string;
     };
-    rating?: number;
-    reference: string;
-    types: string[];
-    user_ratings_total?: number;
-    vicinity?: string;
-  }
-  
+    Level: {
+      Id: number;
+      Title: string;
+      Comments?: string;
+    };
+    CurrentType: {
+      Id: number;
+      Title: string;
+    };
+    PowerKW: number;
+  }>;
+  DataProvider: {
+    WebsiteURL?: string;
+    Comments?: string;
+    DataProviderStatusType?: {
+      Id: number;
+      Title: string;
+    };
+  };
+  NumberOfPoints: number;
+  StatusType: {
+    IsOperational?: boolean | null;
+    IsUserSelectable: boolean;
+    Title: string;
+  };
+  SubmissionStatus: {
+    IsLive: boolean;
+    Title: string;
+  };
+  DateCreated: string;
+  DateLastStatusUpdate: string;
+  UsageCost?: string | null;
+  GeneralComments?: string | null;
+}
