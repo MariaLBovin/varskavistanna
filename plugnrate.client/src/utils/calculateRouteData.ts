@@ -88,21 +88,6 @@ export const calculateRouteData = async (
 
     const chargingStationsResults = await Promise.all(chargingStationsPromises);
 
-    
-    // chargingStationsResults.forEach((result) => {
-    //   result.stations.forEach((station: ChargingStation) => {
-    //     console.log(station.AddressInfo);
-        
-    //     if (station.AddressInfo) {
-    //       // Logga ut addressInfo om det finns
-    //       console.log(`Station: ${station.AddressInfo.Title}`);
-    //       console.log(`AddressInfo:`, station.AddressInfo.Latitude, station.AddressInfo.Longitude);
-    //     } else {
-    //       console.warn(`Station saknar addressInfo:`, station);
-    //     }
-    //   });
-    // });
-
     const allChargingStations = chargingStationsResults
       .flatMap(
         (result: { stations: ChargingStation[] }) => result.stations || []
@@ -113,8 +98,6 @@ export const calculateRouteData = async (
         station: station.AddressInfo.Title,
         status: station.StatusType?.Title || "Unknown"
       }));
-
-    // console.log("Alla stationer:", allChargingStations);
 
     const nearestStations = chargingStationsResults
       .filter((result) => result.position)
