@@ -6,44 +6,46 @@ import Select from "../components/Select/Select";
 import { CarModalProps } from "../interfaces/IModalContaier";
 
 const CarModal: React.FC<CarModalProps> = ({
-    isOpen,
-    onClose,
-    onBrandSubmit,
-    brands,
-    searchValue,
-    handleInputChange,
-    selectedModel,
-    onSave,
-    onModelChange,
-  }) => {
-    const handleModelChange = (event: ChangeEvent<HTMLSelectElement>) => {
-      if (onModelChange) {
-        onModelChange(event);
-      }
-    };
-  
-    return (
+  isOpen,
+  onClose,
+  onBrandSubmit,
+  brands,
+  searchValue,
+  handleInputChange,
+  selectedModel,
+  onSave,
+  onModelChange,
+}) => {
+  const handleModelChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    if (onModelChange) {
+      onModelChange(event);
+    }
+  };
+
+  return (
+    <div className='car-modal-container'>
       <Modal isOpen={isOpen} onClose={onClose}>
         <Input
-          placeholder="Sök bilmärke"
+          placeholder='Sök bilmärke'
           onSubmit={onBrandSubmit}
           value={searchValue}
           onChange={handleInputChange}
         />
-  
+
         {brands.length > 0 && (
           <>
             <Select
               options={brands}
               value={selectedModel}
-              onChange={handleModelChange} // Använd handleModelChange istället för direkt onModelChange
-              placeholder="Välj en modell"
+              onChange={handleModelChange}
+              placeholder='Välj en modell'
             />
-            <Button variant="primary" text="Spara bil" onClick={onSave} />
+            <Button variant='primary' text='Spara bil' onClick={onSave} />
           </>
         )}
       </Modal>
-    );
-  };
-  
- export default CarModal  
+    </div>
+  );
+};
+
+export default CarModal;

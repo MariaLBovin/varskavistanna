@@ -80,7 +80,7 @@ const App: React.FC = () => {
       <div className='maps-container'>
         <MapsComponent
           directionsResponse={directionsResponse}
-          center={{ lat: 48.8584, lng: 2.2945 }}
+          center={{ lat: 59.3293, lng: 18.0686 }}
           chargingStations={chargingStations}
         />
       </div>

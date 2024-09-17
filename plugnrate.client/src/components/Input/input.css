@@ -22,8 +22,10 @@
 }
 
 .input-container-button {
-    background-color: transparent;
     display: flex;
     align-items: center;
-    padding-right: 1rem;
+    justify-content: center;
+}
+input::placeholder {
+    color: var(--tertriary-blue);
 }

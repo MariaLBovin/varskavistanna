@@ -2,6 +2,7 @@ import { ChangeEvent, FormEvent, forwardRef } from 'react';
 import { IInputProps } from './interface';
 import IconSearch from '../../assets/icons/IconSearch';
 import './input.css';
+import Button from '../Button/Button';
 
 const Input = forwardRef<HTMLInputElement, IInputProps>(({ placeholder, onSubmit, readOnly, onClick, value, onChange }, ref) => {
 
@@ -33,9 +34,13 @@ const Input = forwardRef<HTMLInputElement, IInputProps>(({ placeholder, onSubmit
           className="input-container-field"
           readOnly={readOnly}
         />
-        <button type="submit" className="input-container-button">
-          <IconSearch />
-        </button>
+        <div className='input-container-button'>
+        <Button variant={'icon'} icon={<IconSearch/>} onClick={function (): void {
+            throw new Error('Function not implemented.');
+          } }></Button>
+        </div>
+        
+        
       </div>
     </form>
   );

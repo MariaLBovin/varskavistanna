@@ -1,4 +1,5 @@
 import { SelectProps } from "./interface";
+import './select.css'
 
 const Select: React.FC<SelectProps> = ({ options, value, onChange, placeholder = 'Select an option' }) => {
     return (

@@ -7,13 +7,15 @@ const Button = ({ variant, text, icon, onClick }: IButtonProps) => {
       ? "button-primary"
       : variant === "secondary"
       ? "button-secondary"
-      : "button-tertiary"
+      : variant === "tertiary"
+      ? "button-tertiary"
+      : "button-icon"
   }`;
 
   return (
     <button className={buttonClass} onClick={onClick}>
-      {icon && <span className='button-icon'>{icon}</span>}
-      {text && <span className='button-text'>{text}</span>}
+      {icon && <span className='button-icon-span'>{icon}</span>}
+      {variant !== "icon" && text && <span className='button-text'>{text}</span>}
     </button>
   );
 };

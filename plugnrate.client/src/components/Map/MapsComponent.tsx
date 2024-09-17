@@ -12,11 +12,19 @@ const MapsComponent: React.FC<MapsComponentProps> = ({
   center,
   chargingStations,
 }) => {
+  
+  const options = {
+    fullscreenControl: false,
+    mapTypeControl: false,
+    streetViewControl: false,
+  };
+
   return (
     <GoogleMap
       center={center}
       zoom={15}
       mapContainerClassName="maps-container-wrapper"
+      options={options}
     >
       <Marker position={center} />
       {directionsResponse && (

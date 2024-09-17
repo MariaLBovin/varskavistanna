@@ -1,5 +1,5 @@
 import React, { useRef, useState, ChangeEvent } from "react";
-import { Autocomplete} from "@react-google-maps/api";
+import { Autocomplete } from "@react-google-maps/api";
 import Button from "../components/Button/Button";
 import Input from "../components/Input/Input";
 import CarModal from "./CarModal";
@@ -79,18 +79,38 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
     { label: "Rastplats", value: "park" },
     { label: "Köpcentrum", value: "shopping_mall" },
   ];
+  const handleClear = () => {
+    if (originRef.current) originRef.current.value = "";
+    if (destinationRef.current) destinationRef.current.value = "";
 
+    setBrand("");
+    setModels([]);
+    setSelectedModel("");
+    setSelectedCarDetails(null);
+
+    setSelectedFilter(null);
+  };
   return (
     <>
       <Autocomplete>
-        <Input placeholder="Ange startpunkt" onSubmit={() => {}} ref={originRef} />
+        <Input
+          placeholder='Ange startpunkt'
+          onSubmit={() => {}}
+          ref={originRef}
+        />
       </Autocomplete>
       <Autocomplete>
-        <Input placeholder="Ange slutmål" onSubmit={() => {}} ref={destinationRef} />
+        <Input
+          placeholder='Ange slutmål'
+          onSubmit={() => {}}
+          ref={destinationRef}
+        />
       </Autocomplete>
       <Button
-        variant="tertiary"
-        text={brand && selectedModel ? `${brand} ${selectedModel}` : "Sök bilmodell"}
+        variant='tertiary'
+        text={
+          brand && selectedModel ? `${brand} ${selectedModel}` : "Sök bilmodell"
+        }
         onClick={() => setIsCarModalOpen(true)}
       />
       <CarModal
@@ -104,11 +124,16 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
         handleInputChange={(e) => setBrand(e.target.value)}
         onModelChange={handleModelChange}
       />
-      <Filter
-        options={filterOptions}
-        onChangeEvent={handleFilterChange}
-      />
-      <Button variant="primary" text="Sök" onClick={calculateRoute} />
+      <Filter options={filterOptions} onChangeEvent={handleFilterChange} />
+      <div className="search-button-container">
+      <Button variant='primary' text='Planera' onClick={calculateRoute} />
+      <Button
+        variant={"secondary"}
+        text={"Rensa"}
+        onClick={handleClear}
+      ></Button>
+      </div>
+      
     </>
   );
 };

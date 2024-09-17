@@ -4,3 +4,7 @@
     flex-direction: column;
     gap: 2rem;
 }
+.search-button-container {
+    display: flex;
+    justify-content: space-between;
+}
