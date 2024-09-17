@@ -1,4 +1,4 @@
- type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
+ type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'icon';
 
  export interface IButtonProps  {
     variant: ButtonVariant,

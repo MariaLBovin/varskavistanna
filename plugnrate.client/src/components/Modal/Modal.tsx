@@ -58,7 +58,7 @@ const Modal = ({
         onClick={(e) => e.stopPropagation}
       >
         <div className='modal-close-button'>
-          <Button variant={"tertiary"} icon={<IconX/>} onClick={onClose}>
+          <Button variant={"icon"} icon={<IconX/>} onClick={onClose}>
           </Button>
         </div>
         <div className='modal-inner-children'>{children}</div>

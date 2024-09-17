@@ -1,4 +1,5 @@
 import { GoogleMap, Marker, DirectionsRenderer } from "@react-google-maps/api";
+import './maps.css'
 
 interface MapsComponentProps {
   directionsResponse: google.maps.DirectionsResult | null;
@@ -11,11 +12,19 @@ const MapsComponent: React.FC<MapsComponentProps> = ({
   center,
   chargingStations,
 }) => {
+  
+  const options = {
+    fullscreenControl: false,
+    mapTypeControl: false,
+    streetViewControl: false,
+  };
+
   return (
     <GoogleMap
       center={center}
       zoom={15}
-      mapContainerStyle={{ width: "70vw", height: "30vh" }}
+      mapContainerClassName="maps-container-wrapper"
+      options={options}
     >
       <Marker position={center} />
       {directionsResponse && (

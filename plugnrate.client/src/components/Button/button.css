@@ -1,19 +1,20 @@
 .button{
-    min-width: 110px;
-    min-height: 30px;
+    min-width: 4rem;
     border-radius: 5px;
     border: none;
     font-size: 1.6rem;
+    padding: 0.4rem;
 }
 .button-primary {
     background-color: var(--primary-blue);
+    min-width: 11rem;
 }
 .button-secondary {
     background-color: var(--secondary-yellow);
+    min-width: 11rem;
 }
 .button-tertiary {
-    min-width: 45px;
-    min-height: 30px;
+    min-width: 11rem;
     background-color: transparent;
     border: 1px solid var(--tertriary-blue);
     display: flex;
@@ -36,4 +37,9 @@
     padding: 0;
     margin: 0;
     font-size: 1.6rem;
+    background-color: transparent;
+    width: fit-content;
+}
+.button-icon-span{
+    display: flex;
 }

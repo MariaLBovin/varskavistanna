@@ -23,9 +23,6 @@
     padding-top: 5px;
 }
 .filter-inner-wrapper {
-    position: absolute;
-    top: calc(100% + 8px); 
-    left: 0;
     width: 100%;
     display: none;
     flex-direction: column;
