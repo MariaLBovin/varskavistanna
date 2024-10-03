@@ -2,12 +2,14 @@ import axios from 'axios';
 
 export const fetchNearbyPlaces = async (lat: number, lng: number, type: string) => {
   try {
-    const response = await axios.get('https://us-central1-varskajagstanna-b2627.cloudfunctions.net/api/nearby-places', {
+    console.log(type);
+    
+    const response = await axios.get('https://nearbyplaces-onglaqeyia-uc.a.run.app', {
       params: {
         latitude: lat,
         longitude: lng,
         type: type,
-        radius: '1500' 
+        radius: '500' 
       }
     });
     return response.data;

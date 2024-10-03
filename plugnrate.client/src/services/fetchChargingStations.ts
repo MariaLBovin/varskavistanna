@@ -1,10 +1,10 @@
 import axios from "axios";
-import { ChargingStation } from "../interfaces/IChargingStations";
+import { IChargingStation } from "../interfaces/IChargingStations";
 
 
-export const fetchChargingStations = async (latitude: number, longitude: number, radius: number): Promise<ChargingStation[]> => {
+export const fetchChargingStations = async (latitude: number, longitude: number, radius: number): Promise<IChargingStation[]> => {
   try {
-    const response = await axios.get<ChargingStation[]>("https://us-central1-varskajagstanna-b2627.cloudfunctions.net/api/charging-stations", {
+    const response = await axios.get<IChargingStation[]>("https://chargingstations-onglaqeyia-uc.a.run.app", {
       params: {
         latitude,
         longitude,
