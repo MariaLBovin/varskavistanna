@@ -1,13 +1,10 @@
 import { GoogleMap, Marker, DirectionsRenderer } from "@react-google-maps/api";
 import './maps.css'
+import { IMapsComponentProps } from "./interface";
+import { IChargingStation } from "../../interfaces/IChargingStations";
 
-interface MapsComponentProps {
-  directionsResponse: google.maps.DirectionsResult | null;
-  center: google.maps.LatLngLiteral;
-  chargingStations: google.maps.LatLngLiteral[];
-}
 
-const MapsComponent: React.FC<MapsComponentProps> = ({
+const MapsComponent: React.FC<IMapsComponentProps> = ({
   directionsResponse,
   center,
   chargingStations,
@@ -18,6 +15,7 @@ const MapsComponent: React.FC<MapsComponentProps> = ({
     mapTypeControl: false,
     streetViewControl: false,
   };
+
 
   return (
     <GoogleMap
@@ -30,8 +28,11 @@ const MapsComponent: React.FC<MapsComponentProps> = ({
       {directionsResponse && (
         <DirectionsRenderer directions={directionsResponse} />
       )}
-      {chargingStations.map((station, index) => (
-        <Marker key={index} position={station} />
+      {chargingStations.map((station: IChargingStation) => (
+        <Marker key={station.id} position={{
+          lat: station.AddressInfo.Latitude,
+          lng: station.AddressInfo.Longitude,
+        }} />
       ))}
     </GoogleMap>
   );
