@@ -1,0 +1,27 @@
+import { IChargingStation } from "../interfaces/IChargingStations";
+import { fetchNearbyPlaces } from "../services/fetchNearbyPlaces";
+import { fetchStations } from "../services/fetchStations";
+
+export const findWithFilter = async (
+  position: google.maps.LatLng,
+  selectedFilter: string | null
+): Promise<IChargingStation[]> => {
+  const stations = await fetchStations(position);
+
+  if (!selectedFilter) {
+    return stations;
+  }
+
+  const filteredStations = await Promise.all(
+    stations.map(async (station: IChargingStation) => {
+      const nearbyPlaces = await fetchNearbyPlaces(
+        station.AddressInfo.Latitude,
+        station.AddressInfo.Longitude,
+        selectedFilter
+      );
+      return nearbyPlaces.length > 0 ? station : null;
+    })
+  );
+
+  return filteredStations.filter((station) => station !== null) as IChargingStation[];
+};
