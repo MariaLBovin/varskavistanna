@@ -8,33 +8,39 @@ const ResultContainer: React.FC<IResultContainerProps> = ({
   startAdress,
   endAddress,
 }) => {
+  console.log(remainingBattery);
+  
   return (
     <div className="results-container">
       <Display
-        stopName={"Startpunkt"}
+        stopName={"Min positon"}
         stopOperator=''
         address={startAdress}
         batteryLevel={100}
         chargingIcon={<IconBattery />}
       ></Display>
-      {chargingStops.map((station) => (
+      {chargingStops.map((station, index) => (
         <Display
-          key={station.id}
-          stopName={station.AddressInfo.Title}
-          stopOperator={station.OperatorInfo.Title}
+          key={station.id ?? ''}
+          stopName={station.AddressInfo.Title ?? ''}
+          stopOperator={
+            station.OperatorInfo.Title === "(Unknown Operator)" 
+              ? '' 
+              : station.OperatorInfo.Title ?? ''
+          }
           address={
-            `${station.AddressInfo.AddressLine1}, ${station.AddressInfo.Postcode}, ${station.AddressInfo.Town}` ||
+            `${station.AddressInfo.AddressLine1 ?? ''}, ${station.AddressInfo.Postcode ?? ''}, ${station.AddressInfo.Town ?? ''}` ||
             ""
           }
-          batteryLevel={90}
+          batteryLevel={remainingBattery[index] || 0}
           chargingIcon={<IconBattery />}
         />
       ))}
       <Display
-        stopName={"Slutmål"}
+        stopName={"Slutdestination"}
         stopOperator=''
         address={endAddress}
-        batteryLevel={remainingBattery}
+        batteryLevel={remainingBattery[remainingBattery.length - 1] || 0}
         chargingIcon={<IconBattery />}
       ></Display>
     </div>

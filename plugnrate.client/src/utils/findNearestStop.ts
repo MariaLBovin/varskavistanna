@@ -1,19 +1,32 @@
-import { IChargingStation } from "../interfaces/IChargingStations"; // Importera din ChargingStop typ
+import { IChargingStation } from "../interfaces/IChargingStations";
+import { getDistanceBetweenPoints } from "../services/fetchDistanceBetweenPoints"; // Din distansfunktion
 
-export const findNearestStop = (
-    position: google.maps.LatLngLiteral,
-    stations: IChargingStation[]
-): IChargingStation | undefined => {
-    if (stations.length === 0) return undefined;
+export const findNearestStop = async (
+  position: google.maps.LatLngLiteral,
+  stations: IChargingStation[]
+): Promise<IChargingStation | null > => {
+  if (stations.length === 0) return null;
 
-    const distances = stations.map((station) => ({
-        station,
-        distance: google.maps.geometry.spherical.computeDistanceBetween(
-            new google.maps.LatLng(position.lat, position.lng),
-            new google.maps.LatLng(station.AddressInfo.Latitude, station.AddressInfo.Longitude)
-        ),
-    }));
+  try {
+    const distancePromises = stations.map(async (station) => {
+      const distance = await getDistanceBetweenPoints(
+        { lat: position.lat, lng: position.lng }, 
+        { lat: station.AddressInfo.Latitude, lng: station.AddressInfo.Longitude }
+      ); 
+      return { station, distance };
+    });
 
-    const nearest = distances.sort((a, b) => a.distance - b.distance)[0];
+    const distances = await Promise.all(distancePromises);
+    
+    const validDistances = distances.filter((d) => d.distance !== null);
+
+    if (validDistances.length === 0) return null;
+
+    const nearest = validDistances.sort((a, b) => a.distance! - b.distance!)[0];
+
     return nearest.station;
+  } catch (error) {
+    console.error("Error finding nearest stop:", error);
+    return null;
+  }
 };

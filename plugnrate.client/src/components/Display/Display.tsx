@@ -2,7 +2,7 @@ import { IChargingStopProps } from "./interface";
 import './display.css';
 
 const Display: React.FC<IChargingStopProps> = ({ stopName, stopOperator, address, batteryLevel, chargingIcon }) => {
-  console.log(address);
+  // console.log(address);
   
   const [street, postalCode, town] = address.split(",").map(part => part.trim());
 

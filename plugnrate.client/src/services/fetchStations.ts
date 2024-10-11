@@ -2,19 +2,18 @@ import axios from "axios";
 import { IChargingStation } from "../interfaces/IChargingStations";
 
 export const fetchStations = async (
-  stopLatLng: google.maps.LatLng
+  stopLatLng: google.maps.LatLng,
+  radius: number,
 ): Promise<IChargingStation[]> => {
   const lat = stopLatLng.lat();
   const lng = stopLatLng.lng();
 
   try {
-
-
     const response = await axios.get<IChargingStation[]>("https://chargingstations-onglaqeyia-uc.a.run.app", {
       params: {
         latitude: lat,
         longitude: lng,
-        radius: 10,
+        radius: radius,
       },
     });
     return Array.isArray(response.data) ? response.data : [];

@@ -4,9 +4,11 @@ import { fetchStations } from "../services/fetchStations";
 
 export const findWithFilter = async (
   position: google.maps.LatLng,
-  selectedFilter: string | null
+  selectedFilter: string | null,
+  radius: number,
 ): Promise<IChargingStation[]> => {
-  const stations = await fetchStations(position);
+
+  const stations = await fetchStations(position, radius);
 
   if (!selectedFilter) {
     return stations;
