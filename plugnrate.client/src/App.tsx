@@ -7,6 +7,7 @@ import ResultContainer from "./containers/ResultContainer";
 import { IChargingStation } from "./interfaces/IChargingStations";
 import { calculateRouteData } from "./utils/calculateRouteData";
 import { Car } from "./interfaces/cars";
+import Loader from "./components/Loader/Loader";
 
 const App: React.FC = () => {
   const [directionsResponse, setDirectionsResponse] = useState<google.maps.DirectionsResult | null>(null);
@@ -23,6 +24,7 @@ const App: React.FC = () => {
   const [selectedCarDetails, setSelectedCarDetails] = useState<Car | null>(null);
   const [distance, setDistance] = useState<string>('');
   const [duration, setDuration] = useState<string>("");
+  const [loading, setLoading] = useState(false);
 
   const apiKey = import.meta.env.VITE_GOOGLE_MAPS_KEY;
 
@@ -32,7 +34,7 @@ const App: React.FC = () => {
   });
 
   if (!isLoaded) {
-    return <div>Laddar...</div>;
+    return <Loader/>;
   }
 
   const handleRouteResult = async (
@@ -51,7 +53,7 @@ const App: React.FC = () => {
       console.error("Kunde inte omvandla bilens räckvidd till ett tal.");
       return;
     }
-
+    setLoading(true)
     await calculateRouteData(
       origin,
       destination,
@@ -66,6 +68,7 @@ const App: React.FC = () => {
     );
 
     setShowResult(true);
+    setLoading(false);
   };
 
   const handleSetCarDetails = (car: Car | null) => {
@@ -81,7 +84,9 @@ const App: React.FC = () => {
           chargingStations={nearestStationsData.stations}
         />
       </div>
-      {showResult ? (
+      {loading? (
+        <Loader/>
+      ) :showResult ? (
         <ResultContainer
           chargingStops={nearestStationsData.stations}
           remainingBattery={nearestStationsData.remainingBattery}
