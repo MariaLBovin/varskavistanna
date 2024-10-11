@@ -1,10 +1,14 @@
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from './firebaseConfig'; 
 
+const capitalizeFirstLetter = (str: string) => {
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+};
+
 export const fetchCarsByBrand = async (brand: string) => {
   try {
-    // Skapa en referens till dokumentet för det specifika bilmärket
-    const docRef = doc(db, 'cars', brand);
+    const normalizedBrand = capitalizeFirstLetter(brand);
+    const docRef = doc(db, 'cars', normalizedBrand);
     const docSnapshot = await getDoc(docRef);
 
     if (docSnapshot.exists()) {

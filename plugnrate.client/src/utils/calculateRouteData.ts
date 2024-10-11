@@ -1,5 +1,4 @@
-// calculateRouteData.ts
-import { IChargingStation } from "../interfaces/IChargingStations";
+import { IChargingStation } from "../interfaces/IChargingStations"; 
 import { calculateFirstStop } from "./calculateFirstStop";
 import { calculateNextStops } from "./calculateNextStops";
 
@@ -10,9 +9,10 @@ export const calculateRouteData = async (
   setDistance: (distance: string) => void,
   setDuration: (duration: string) => void,
   carRange: number,
-  setNearestChargingStations: (stations: IChargingStation[], remainingBattery: number, batteryBeforeStops: number[]) => void,
+  setNearestChargingStations: (stations: IChargingStation[], remainingBattery: number[], remainingDistance: number) => void,
   selectedFilter: string | null
 ) => {
+  
   const directionService = new google.maps.DirectionsService();
 
   try {
@@ -29,40 +29,43 @@ export const calculateRouteData = async (
     const leg = results.routes[0].legs[0];
     const totalDistanceKm = (leg.distance?.value || 0) / 1000;
 
-    let remainingDistance = totalDistanceKm;
-    let currentBattery = 100;
-    const chargingStations: IChargingStation[] = [];
 
-    // Beräkna första stoppet
-    const { stop: firstStop, remainingDistance: afterFirstStopDistance, currentBattery: afterFirstStopBattery } = 
-    await calculateFirstStop(leg, carRange, selectedFilter);
-    if (firstStop) {
-      chargingStations.push(firstStop);
-      remainingDistance = afterFirstStopDistance;
-      currentBattery = afterFirstStopBattery;
+    const { firstStop, remainingDistance, currentBattery, batteryLeft } = await calculateFirstStop(leg, carRange, selectedFilter);
+    if (!firstStop) {
+      console.error("No charging station found for the first stop.");
+      return;
     }
 
-    // Beräkna efterföljande stopp
-    const { chargingStations: nextChargingStations, currentBattery: updatedBattery } = 
-    await calculateNextStops(
+    const { chargingStations, batteryLevels } = await calculateNextStops(
       leg,
       remainingDistance,
       totalDistanceKm,
       carRange,
       currentBattery,
-      selectedFilter
+      selectedFilter,
+      firstStop
     );
-    
-    
-    // Slå samman laddstationer från första stoppet och efterföljande stopp
-    chargingStations.push(...nextChargingStations);
-    console.log(chargingStations);
-    currentBattery = updatedBattery;
+
+
+    const allStops = [{ station: firstStop, remainingBattery: batteryLeft }, 
+      ...chargingStations.map((station, index) => ({
+        station,
+        remainingBattery: batteryLevels[index + 1]
+      }))
+    ];
+
+    console.log(allStops);
 
     setDistance(leg.distance?.text || "Distance not available");
     setDuration(leg.duration?.text || "Duration not available");
     setDirectionsResponse(results);
-    setNearestChargingStations(chargingStations, currentBattery, []);
+
+    setNearestChargingStations(
+      allStops.map(stop => stop.station),
+      allStops.map(stop => stop.remainingBattery),
+      remainingDistance
+    );
+
   } catch (error) {
     console.error("Error fetching route:", error);
   }

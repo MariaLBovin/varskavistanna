@@ -4,7 +4,7 @@ export const getStopLatLng = (
   ): google.maps.LatLng | null => {
     let accumulatedDistance = 0;
     for (const step of leg.steps) {
-      const stepDistanceKm = (step.distance?.value || 0) / 1000;
+      const stepDistanceKm = (step.distance?.value || 0)/1000;
       accumulatedDistance += stepDistanceKm;
   
       if (accumulatedDistance >= stopDistance) {
@@ -17,11 +17,7 @@ export const getStopLatLng = (
           startLatLng.lat() + (endLatLng.lat() - startLatLng.lat()) * progress;
         const lng =
           startLatLng.lng() + (endLatLng.lng() - startLatLng.lng()) * progress;
-  
-        console.log(
-          `Beräknad position för laddstopp vid ${stopDistance} km: Lat: ${lat}, Lng: ${lng}`
-        );
-  
+        
         return new google.maps.LatLng(lat, lng);
       }
     }

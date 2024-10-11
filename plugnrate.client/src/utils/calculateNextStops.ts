@@ -1,6 +1,5 @@
-// calculateNextStops.ts
 import { IChargingStation } from "../interfaces/IChargingStations";
-import { calculateBatteryAndDistance } from "./calculateBatteryAndDistance";
+import { getDistanceBetweenPoints } from "../services/fetchDistanceBetweenPoints";
 import { findNextChargingStop } from "./findNextChargingStop";
 import { getStopLatLng } from "./getStopsLatLang";
 
@@ -10,57 +9,99 @@ export const calculateNextStops = async (
   totalDistanceKm: number,
   carRange: number,
   currentBattery: number,
-  selectedFilter: string | null
+  selectedFilter: string | null,
+  firstStop: IChargingStation | null
 ): Promise<{
   chargingStations: IChargingStation[];
-  currentBattery: number;
+  finalBattery: number;
+  finalDistance: number;
+  remainingDistance: number;
+  batteryLevels: number[];
 }> => {
-  const nextStopRange = carRange * 0.65;
-  const chargingStations: IChargingStation[] = [];
-  let stop = null;
 
-  const nextStop = Math.round(
-    totalDistanceKm - remainingDistance + nextStopRange
+  if (!firstStop) {
+    return {
+      chargingStations: [],
+      finalBattery: currentBattery,
+      finalDistance: remainingDistance,
+      remainingDistance,
+      batteryLevels: [100]
+    }; 
+  }
+
+  const nextStopRange = carRange * 0.65;
+  const batteryLevels: number[] = [currentBattery];
+  const chargingStations: IChargingStation[] = [];
+  let previousStop = new google.maps.LatLng(
+    firstStop.AddressInfo.Latitude,
+    firstStop.AddressInfo.Longitude
   );
   
+  let totalBatteryUsed = 0;
+  let radius = 30;
+
   while (remainingDistance > nextStopRange) {
-    const nextStopPosition = getStopLatLng(
-      leg,
-      nextStop
+    const nextStopKm = Math.round(
+      totalDistanceKm - remainingDistance + nextStopRange
     );
-    console.log(nextStopPosition);
     
-    
-    if (!nextStopPosition) break;
+    const nextStopPosition = getStopLatLng(leg, nextStopKm);
+  
+    if (!nextStopPosition) {
+        return {
+          chargingStations: [],
+          remainingDistance: 0,
+          finalBattery: 100,
+          finalDistance: totalDistanceKm,
+          batteryLevels: batteryLevels 
+        };
+    }
 
     const nearestStop = await findNextChargingStop(
       nextStopPosition.toJSON(),
-      selectedFilter
+      selectedFilter,
+      radius
     );
-
-    if (!nearestStop) break;
+    if (!nearestStop) {
+      radius += 10;
+      return {
+        chargingStations: [],
+        remainingDistance: 0,
+        finalBattery: 100,
+        finalDistance: totalDistanceKm,
+        batteryLevels: batteryLevels 
+      };
+    }
 
     chargingStations.push(nearestStop);
+    
+    const stopLatLng = new google.maps.LatLng(
+      nearestStop.AddressInfo.Latitude,
+      nearestStop.AddressInfo.Longitude
+    );
+    const distanceInMeters = await getDistanceBetweenPoints(previousStop.toJSON(), stopLatLng.toJSON());
+    const distanceInKm = Math.round(distanceInMeters / 1000);
+    
+    const batteryUsed = (distanceInKm / carRange) * 100;
+    
+    const nextBatteryLeft = Math.round(currentBattery - batteryUsed);
+    
+    remainingDistance -= distanceInKm;
+    previousStop = stopLatLng;
+    totalBatteryUsed = batteryUsed;
+    currentBattery = 80;
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { battery: batteryAfterNextStop, distanceDriven } =
-      calculateBatteryAndDistance(
-        new google.maps.LatLng(
-          stop?.AddressInfo.Latitude || 0,
-          stop?.AddressInfo.Longitude || 0
-        ),
-        new google.maps.LatLng(
-          nearestStop.AddressInfo.Latitude,
-          nearestStop.AddressInfo.Longitude
-        ),
-        carRange,
-        currentBattery
-      );
-
-    // currentBattery = 80; 
-    remainingDistance -= distanceDriven;
-    stop = nearestStop;
+    batteryLevels.push(nextBatteryLeft);
   }
-
-  return { chargingStations, currentBattery };
+  
+  const finalBattery = Math.max(0, currentBattery - totalBatteryUsed);
+  console.log(batteryLevels);
+  
+  return {
+    chargingStations,
+    finalBattery,
+    finalDistance: remainingDistance,
+    remainingDistance,
+    batteryLevels 
+  };
 };
