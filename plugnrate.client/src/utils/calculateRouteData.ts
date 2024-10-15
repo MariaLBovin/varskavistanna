@@ -11,7 +11,9 @@ export const calculateRouteData = async (
   carRange: number,
   setNearestChargingStations: (stations: IChargingStation[], remainingBattery: number[], remainingDistance: number) => void,
   setFinalBattery: (battery: number) => void,
-  selectedFilter: string | null
+  selectedFilter: string | null,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  handleError: (error: any) => void
 ) => {
   
   const directionService = new google.maps.DirectionsService();
@@ -24,7 +26,7 @@ export const calculateRouteData = async (
     });
 
     if (!results?.routes?.length) {
-      return console.error("No route found");
+      handleError;
     }
 
     const leg = results.routes[0].legs[0];
@@ -78,6 +80,6 @@ export const calculateRouteData = async (
     );
     setFinalBattery(finalBattery);
   } catch (error) {
-    console.error("Error fetching route:", error);
+    handleError;
   }
 };

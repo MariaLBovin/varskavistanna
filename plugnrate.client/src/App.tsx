@@ -8,10 +8,10 @@ import { IChargingStation } from "./interfaces/IChargingStations";
 import { calculateRouteData } from "./utils/calculateRouteData";
 import { Car } from "./interfaces/cars";
 import Loader from "./components/Loader/Loader";
+import NotFound from "./containers/404";
 
 const App: React.FC = () => {
   const [directionsResponse, setDirectionsResponse] = useState<google.maps.DirectionsResult | null>(null);
-  
   const [nearestStationsData, setNearestStationsData] = useState<{
     stations: IChargingStation[];
     remainingBattery: number[];
@@ -26,6 +26,7 @@ const App: React.FC = () => {
   const [duration, setDuration] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const [finalBattery, setFinalBattery] = useState<number>(0);
+  const [hasError, setHasError] = useState<boolean>(false); 
 
   const apiKey = import.meta.env.VITE_GOOGLE_MAPS_KEY;
 
@@ -35,7 +36,7 @@ const App: React.FC = () => {
   });
 
   if (!isLoaded) {
-    return <Loader/>;
+    return <Loader />;
   }
 
   const handleRouteResult = async (
@@ -54,7 +55,9 @@ const App: React.FC = () => {
       console.error("Kunde inte omvandla bilens räckvidd till ett tal.");
       return;
     }
-    setLoading(true)
+
+    setLoading(true);
+    setHasError(false);
 
     await calculateRouteData(
       origin,
@@ -63,16 +66,23 @@ const App: React.FC = () => {
       setDistance,
       setDuration,
       rangeNumber,
-      (stations : IChargingStation[], remainingBattery: number [], remainingDistance: number) => {
-        setNearestStationsData({ stations, remainingBattery, remainingDistance });
+      (stations: IChargingStation[], remainingBattery: number[], remainingDistance: number) => {
+        if (stations.length === 0) {
+          setHasError(true);
+        } else {
+          setNearestStationsData({ stations, remainingBattery, remainingDistance });
+        }
       },
-      (finalBattery : number) => { setFinalBattery  (finalBattery) },
+      (finalBattery: number) => { setFinalBattery(finalBattery) },
       selectedFilter,
-      
+      (error) => { 
+        console.error("Error fetching data:", error);
+        setHasError(true);
+      }
     );
 
     if (!nearestStationsData.stations.length) {
-      setDirectionsResponse;
+      setDirectionsResponse
     }
 
     setShowResult(true);
@@ -83,6 +93,10 @@ const App: React.FC = () => {
     setSelectedCarDetails(car);
   };
 
+  if (hasError) {
+    return <NotFound />;
+  }
+
   return (
     <>
       <div className="maps-container">
@@ -92,15 +106,15 @@ const App: React.FC = () => {
           chargingStations={nearestStationsData.stations}
         />
       </div>
-      {loading? (
-        <Loader/>
-      ) :showResult ? (
+      {loading ? (
+        <Loader />
+      ) : showResult ? (
         <ResultContainer
           chargingStops={nearestStationsData.stations}
           remainingBattery={nearestStationsData.remainingBattery}
           startAdress={origin}
           endAddress={destination}
-          finalBattery ={finalBattery}
+          finalBattery={finalBattery}
         />
       ) : (
         <div className="search-container">
