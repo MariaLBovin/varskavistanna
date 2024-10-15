@@ -29,3 +29,13 @@
 input::placeholder {
     color: var(--tertriary-blue);
 }
+.input-error {
+    border: 1px solid red;
+  }
+  
+.input-error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 4px;
+}
+  

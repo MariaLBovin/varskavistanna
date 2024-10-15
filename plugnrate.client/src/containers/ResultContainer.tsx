@@ -7,6 +7,7 @@ const ResultContainer: React.FC<IResultContainerProps> = ({
   remainingBattery,
   startAdress,
   endAddress,
+  finalBattery
 }) => {
   console.log(remainingBattery);
   
@@ -40,7 +41,7 @@ const ResultContainer: React.FC<IResultContainerProps> = ({
         stopName={"Slutdestination"}
         stopOperator=''
         address={endAddress}
-        batteryLevel={remainingBattery[remainingBattery.length - 1] || 0}
+        batteryLevel={finalBattery}
         chargingIcon={<IconBattery />}
       ></Display>
     </div>

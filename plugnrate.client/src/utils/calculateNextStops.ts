@@ -18,15 +18,14 @@ export const calculateNextStops = async (
   remainingDistance: number;
   batteryLevels: number[];
 }> => {
-
   if (!firstStop) {
     return {
       chargingStations: [],
       finalBattery: currentBattery,
       finalDistance: remainingDistance,
       remainingDistance,
-      batteryLevels: [100]
-    }; 
+      batteryLevels: [100],
+    };
   }
 
   const nextStopRange = carRange * 0.65;
@@ -36,7 +35,7 @@ export const calculateNextStops = async (
     firstStop.AddressInfo.Latitude,
     firstStop.AddressInfo.Longitude
   );
-  
+
   let totalBatteryUsed = 0;
   let radius = 30;
 
@@ -44,17 +43,17 @@ export const calculateNextStops = async (
     const nextStopKm = Math.round(
       totalDistanceKm - remainingDistance + nextStopRange
     );
-    
+
     const nextStopPosition = getStopLatLng(leg, nextStopKm);
-  
+
     if (!nextStopPosition) {
-        return {
-          chargingStations: [],
-          remainingDistance: 0,
-          finalBattery: 100,
-          finalDistance: totalDistanceKm,
-          batteryLevels: batteryLevels 
-        };
+      return {
+        chargingStations: [],
+        remainingDistance: 0,
+        finalBattery: 100,
+        finalDistance: totalDistanceKm,
+        batteryLevels: batteryLevels,
+      };
     }
 
     const nearestStop = await findNextChargingStop(
@@ -69,23 +68,26 @@ export const calculateNextStops = async (
         remainingDistance: 0,
         finalBattery: 100,
         finalDistance: totalDistanceKm,
-        batteryLevels: batteryLevels 
+        batteryLevels: batteryLevels,
       };
     }
 
     chargingStations.push(nearestStop);
-    
+
     const stopLatLng = new google.maps.LatLng(
       nearestStop.AddressInfo.Latitude,
       nearestStop.AddressInfo.Longitude
     );
-    const distanceInMeters = await getDistanceBetweenPoints(previousStop.toJSON(), stopLatLng.toJSON());
+    const distanceInMeters = await getDistanceBetweenPoints(
+      previousStop.toJSON(),
+      stopLatLng.toJSON()
+    );
     const distanceInKm = Math.round(distanceInMeters / 1000);
-    
+
     const batteryUsed = (distanceInKm / carRange) * 100;
-    
+
     const nextBatteryLeft = Math.round(currentBattery - batteryUsed);
-    
+
     remainingDistance -= distanceInKm;
     previousStop = stopLatLng;
     totalBatteryUsed = batteryUsed;
@@ -93,15 +95,34 @@ export const calculateNextStops = async (
 
     batteryLevels.push(nextBatteryLeft);
   }
-  
+
+  currentBattery = 80;
+
+  if (remainingDistance > 0) {
+    const distanceInKm = remainingDistance;
+    const batteryUsedForFinalLeg = (distanceInKm / carRange) * 100;
+
+    const finalBattery = Math.round(currentBattery - batteryUsedForFinalLeg);
+
+    batteryLevels.push(finalBattery);
+
+    return {
+      chargingStations,
+      finalBattery,
+      finalDistance: totalDistanceKm,
+      remainingDistance: 0,
+      batteryLevels,
+    };
+  }
+
   const finalBattery = Math.max(0, currentBattery - totalBatteryUsed);
-  console.log(batteryLevels);
-  
+  console.log(batteryLevels, finalBattery);
+
   return {
     chargingStations,
     finalBattery,
     finalDistance: remainingDistance,
     remainingDistance,
-    batteryLevels 
+    batteryLevels,
   };
 };

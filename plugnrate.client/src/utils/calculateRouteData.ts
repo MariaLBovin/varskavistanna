@@ -10,7 +10,10 @@ export const calculateRouteData = async (
   setDuration: (duration: string) => void,
   carRange: number,
   setNearestChargingStations: (stations: IChargingStation[], remainingBattery: number[], remainingDistance: number) => void,
-  selectedFilter: string | null
+  setFinalBattery: (battery: number) => void,
+  selectedFilter: string | null,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  handleError: (error: any) => void
 ) => {
   
   const directionService = new google.maps.DirectionsService();
@@ -23,7 +26,7 @@ export const calculateRouteData = async (
     });
 
     if (!results?.routes?.length) {
-      return console.error("No route found");
+      handleError;
     }
 
     const leg = results.routes[0].legs[0];
@@ -31,12 +34,21 @@ export const calculateRouteData = async (
 
 
     const { firstStop, remainingDistance, currentBattery, batteryLeft } = await calculateFirstStop(leg, carRange, selectedFilter);
+
     if (!firstStop) {
-      console.error("No charging station found for the first stop.");
+      const batteryUsed = (totalDistanceKm / carRange) * 100; 
+      const finalBattery = Math.round(100 - batteryUsed); 
+      console.log("No charging station needed, total distance:", totalDistanceKm);
+
+      setDistance(leg.distance?.text || "Distance not available");
+      setDuration(leg.duration?.text || "Duration not available");
+      setDirectionsResponse(results);
+
+      setNearestChargingStations([], [], remainingDistance);
+      setFinalBattery(finalBattery);
       return;
     }
-
-    const { chargingStations, batteryLevels } = await calculateNextStops(
+    const { chargingStations, batteryLevels, finalBattery } = await calculateNextStops(
       leg,
       remainingDistance,
       totalDistanceKm,
@@ -51,6 +63,7 @@ export const calculateRouteData = async (
       ...chargingStations.map((station, index) => ({
         station,
         remainingBattery: batteryLevels[index + 1]
+
       }))
     ];
 
@@ -65,8 +78,8 @@ export const calculateRouteData = async (
       allStops.map(stop => stop.remainingBattery),
       remainingDistance
     );
-
+    setFinalBattery(finalBattery);
   } catch (error) {
-    console.error("Error fetching route:", error);
+    handleError;
   }
 };
