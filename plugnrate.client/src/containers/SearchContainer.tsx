@@ -42,9 +42,12 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
   const [selectedFilter, setSelectedFilter] = useState<string | null>(
     localStorage.getItem("selectedFilter") || null
   );
-
+  
   const originRef = useRef<HTMLInputElement | null>(null);
   const destinationRef = useRef<HTMLInputElement | null>(null);
+
+  const [isOriginEmpty, setIsOriginEmpty] = useState<boolean>(false);
+  const [isDestinationEmpty, setIsDestinationEmpty] = useState<boolean>(false)
 
   // Ladda origin och destination från localStorage
     
@@ -106,6 +109,9 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
     setOrigin(originValue);
     setDestination(destinationValue); 
 
+    setIsOriginEmpty(originValue === "");
+    setIsDestinationEmpty(destinationValue === "");
+
     // Spara origin och destination i localStorage
     localStorage.setItem("origin", originValue);
     localStorage.setItem("destination", destinationValue);
@@ -152,18 +158,16 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
         <Input
           placeholder='Ange startpunkt'
           ref={originRef}
-          onSubmit={function (): void {
-            throw new Error("Function not implemented.");
-          }}
+          isEmpty={isOriginEmpty}
+          
         />
       </Autocomplete>
       <Autocomplete>
         <Input
           placeholder='Ange slutmål'
           ref={destinationRef}
-          onSubmit={function (): void {
-            throw new Error("Function not implemented.");
-          }}
+          isEmpty={isDestinationEmpty}
+          
         />
       </Autocomplete>
       <Button
