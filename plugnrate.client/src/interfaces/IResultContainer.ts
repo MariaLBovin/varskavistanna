@@ -5,4 +5,5 @@ export interface IResultContainerProps {
     remainingBattery: number[];
     startAdress: string;
     endAddress: string;
+    finalBattery: number
   }

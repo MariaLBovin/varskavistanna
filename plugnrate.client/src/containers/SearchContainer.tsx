@@ -150,8 +150,26 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
     localStorage.removeItem("origin");
     localStorage.removeItem("destination");
   };
+  const handleOpenCarModal = () => {
+    setIsCarModalOpen(true);
+    setBrand("");
+    setModels([]);
+    setSelectedModel("");
+    setSelectedCarDetails(null);
+  };
 
-  
+  const handleOriginClick = () => {
+    setOrigin("");
+    if (originRef.current) {
+      originRef.current.value = ""; 
+    }
+  };
+  const handleDestinationClick = () => {
+    setDestination("");
+    if(destinationRef.current) {
+      destinationRef.current.value = "";
+    }
+  }
   return (
     <>
       <Autocomplete>
@@ -159,7 +177,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
           placeholder='Ange startpunkt'
           ref={originRef}
           isEmpty={isOriginEmpty}
-          
+          onClick={handleOriginClick}
         />
       </Autocomplete>
       <Autocomplete>
@@ -167,7 +185,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
           placeholder='Ange slutmål'
           ref={destinationRef}
           isEmpty={isDestinationEmpty}
-          
+          onClick={handleDestinationClick}
         />
       </Autocomplete>
       <Button
@@ -175,7 +193,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
         text={
           brand && selectedModel ? `${brand} ${selectedModel}` : "Sök bilmodell"
         }
-        onClick={() => setIsCarModalOpen(true)}
+        onClick={handleOpenCarModal}
       />
       <CarModal
         isOpen={isCarModalOpen}

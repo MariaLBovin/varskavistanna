@@ -25,6 +25,7 @@ const App: React.FC = () => {
   const [distance, setDistance] = useState<string>('');
   const [duration, setDuration] = useState<string>("");
   const [loading, setLoading] = useState(false);
+  const [finalBattery, setFinalBattery] = useState<number>(0);
 
   const apiKey = import.meta.env.VITE_GOOGLE_MAPS_KEY;
 
@@ -54,6 +55,7 @@ const App: React.FC = () => {
       return;
     }
     setLoading(true)
+
     await calculateRouteData(
       origin,
       destination,
@@ -64,8 +66,14 @@ const App: React.FC = () => {
       (stations : IChargingStation[], remainingBattery: number [], remainingDistance: number) => {
         setNearestStationsData({ stations, remainingBattery, remainingDistance });
       },
-      selectedFilter
+      (finalBattery : number) => { setFinalBattery  (finalBattery) },
+      selectedFilter,
+      
     );
+
+    if (!nearestStationsData.stations.length) {
+      setDirectionsResponse;
+    }
 
     setShowResult(true);
     setLoading(false);
@@ -92,6 +100,7 @@ const App: React.FC = () => {
           remainingBattery={nearestStationsData.remainingBattery}
           startAdress={origin}
           endAddress={destination}
+          finalBattery ={finalBattery}
         />
       ) : (
         <div className="search-container">
