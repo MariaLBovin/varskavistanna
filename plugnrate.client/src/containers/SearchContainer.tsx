@@ -170,6 +170,8 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
       destinationRef.current.value = "";
     }
   }
+
+  
   return (
     <>
       <Autocomplete>
