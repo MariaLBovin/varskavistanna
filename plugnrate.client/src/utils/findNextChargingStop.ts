@@ -13,7 +13,8 @@ export const findNextChargingStop = async (
     const filteredStations = await findWithFilter(stopLatLng, selectedFilter, radius);
   
     const nearestStop = findNearestStop(stopPosition, filteredStations);
-
+    console.log(nearestStop);
+    
     return nearestStop || null;
   };
   

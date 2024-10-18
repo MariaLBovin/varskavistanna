@@ -91,6 +91,10 @@ const ResultContainer: React.FC<IResultContainerProps> = ({
     window.open(mapsUrl, '_blank')
   };
 
+  const handleBackToHome = () => {
+    window.location.href = "/"; 
+  };
+
   return (
     <div className='result-outer'>
       <div className='scroll-container'>
@@ -157,9 +161,7 @@ const ResultContainer: React.FC<IResultContainerProps> = ({
         <Button
           variant={"secondary"}
           text='Börja om'
-          onClick={() => {
-            /* Implement reset functionality */
-          }}
+          onClick={handleBackToHome}
         />
         <Button
           variant='primary'

@@ -11,7 +11,7 @@ export const findWithFilter = async (
   const stations = await fetchStations(position, radius);
 
   if (!selectedFilter) {
-    return stations;
+    return stations; 
   }
 
   const filteredStations = await Promise.all(
@@ -25,5 +25,9 @@ export const findWithFilter = async (
     })
   );
 
-  return filteredStations.filter((station) => station !== null) as IChargingStation[];
+  const validFilteredStations = filteredStations.filter(
+    (station) => station !== null
+  ) as IChargingStation[];
+
+  return validFilteredStations.length > 0 ? validFilteredStations : stations;
 };

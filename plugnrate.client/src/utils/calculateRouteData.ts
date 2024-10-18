@@ -42,7 +42,7 @@ export const calculateRouteData = async (
 
       setDistance(leg.distance?.text || "Distance not available");
       setDuration(leg.duration?.text || "Duration not available");
-      setDirectionsResponse(results);
+      // setDirectionsResponse(results);
 
       setNearestChargingStations([], [], remainingDistance);
       setFinalBattery(finalBattery);
@@ -58,6 +58,29 @@ export const calculateRouteData = async (
       firstStop
     );
 
+    const waypoints = [
+      { location: new google.maps.LatLng(firstStop.AddressInfo.Latitude, firstStop.AddressInfo.Longitude), stopover: true },
+      ...chargingStations.map((station) => ({
+        location: new google.maps.LatLng(station.AddressInfo.Latitude, station.AddressInfo.Longitude),
+        stopover: true,
+      })),
+    ];
+    console.log('waypoints: ', waypoints);
+    
+
+    const updatedResults = await directionService.route({
+      origin,
+      destination,
+      travelMode: google.maps.TravelMode.DRIVING,
+      waypoints, 
+      optimizeWaypoints: false,
+    });
+
+    const updatedLeg = updatedResults.routes[0].legs[0];
+
+    setDistance(updatedLeg.distance?.text || "Distance not available");
+    setDuration(updatedLeg.duration?.text || "Duration not available");
+    setDirectionsResponse(updatedResults);
 
     const allStops = [{ station: firstStop, remainingBattery: batteryLeft }, 
       ...chargingStations.map((station, index) => ({
@@ -67,11 +90,9 @@ export const calculateRouteData = async (
       }))
     ];
 
-    console.log(allStops);
-
     setDistance(leg.distance?.text || "Distance not available");
     setDuration(leg.duration?.text || "Duration not available");
-    setDirectionsResponse(results);
+    setDirectionsResponse(updatedResults);
 
     setNearestChargingStations(
       allStops.map(stop => stop.station),

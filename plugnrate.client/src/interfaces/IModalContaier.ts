@@ -5,11 +5,12 @@ export interface CarModalProps {
     isOpen: boolean;
     onClose: () => void;
     onBrandSubmit: (brand: string) => void;
-    brands: SelectOption[];
+    models: SelectOption[];
+    brands: string []
     selectedModel: string;
     onSave: () => void;
     onModelChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
     searchValue: string;
-    handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void
+    handleInputChange?: (event: ChangeEvent<HTMLInputElement>) => void
   }
   

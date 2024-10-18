@@ -15,8 +15,9 @@ const MapsComponent: React.FC<IMapsComponentProps> = ({
     mapTypeControl: false,
     streetViewControl: false,
   };
-
-
+  console.log(directionsResponse);
+  
+  
   return (
     <GoogleMap
       center={center}

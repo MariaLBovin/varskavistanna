@@ -1,13 +1,37 @@
-import { doc, getDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
 import { db } from './firebaseConfig'; 
 
-const capitalizeFirstLetter = (str: string) => {
-  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+// const capitalizeFirstLetter = (str: string) => {
+//   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+// };
+
+const capitalizeBrandName = (brand: string) => {
+  return brand.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+};
+
+
+
+export const fetchAllCarBrands = async () => {
+  try {
+    const brandsCollection = collection(db, 'cars');
+    const snapshot = await getDocs(brandsCollection);
+    
+    const brands: string[] = [];
+    snapshot.forEach(doc => {
+      brands.push(doc.id);
+    });
+    
+    console.log('Fetched brands:', brands);
+    return brands;
+  } catch (error) {
+    console.error('Error fetching car brands:', error);
+    throw new Error('Could not fetch car brands');
+  }
 };
 
 export const fetchCarsByBrand = async (brand: string) => {
   try {
-    const normalizedBrand = capitalizeFirstLetter(brand);
+    const normalizedBrand = capitalizeBrandName(brand);
     const docRef = doc(db, 'cars', normalizedBrand);
     const docSnapshot = await getDoc(docRef);
 
@@ -15,6 +39,7 @@ export const fetchCarsByBrand = async (brand: string) => {
       const data = docSnapshot.data();
       console.log(data);
 
+      
       if (data && data.models) {
         return data.models; 
       } else {

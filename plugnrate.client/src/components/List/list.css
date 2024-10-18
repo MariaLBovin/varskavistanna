@@ -1,0 +1,21 @@
+.list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .list li {
+    margin: 5px 0;
+  }
+  
+  .list button {
+    background: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 5px;
+    width: 100%;
+    font-size: 1.6rem;
+  }
+  
+  .list button.selected {
+    border-color: #999;
+  }
+  
