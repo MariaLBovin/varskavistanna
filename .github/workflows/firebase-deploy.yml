@@ -18,9 +18,15 @@ jobs:
           node-version: 20
           cache: 'npm'
 
-      - name: Install dependencies
+      - name: Install Frontend-dependencies
+        working-directory: ./client
+        run: |
+          npm install
+          npm run build
+      - name: Install Backend-dependencies
+        working-directory: ./server
         run: npm install
-
+        
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
 
