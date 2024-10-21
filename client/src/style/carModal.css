@@ -1,0 +1,7 @@
+.car-modal-open {
+    display: block;
+
+}
+.car-modal-closed {
+    display: none;
+}
