@@ -1,41 +1,56 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import Button from "../components/Button/Button";
-import Input from "../components/Input/Input";
 import Modal from "../components/Modal/Modal";
 import Select from "../components/Select/Select";
 import { CarModalProps } from "../interfaces/IModalContaier";
+import ListComponent from "../components/List/List";
 
 const CarModal: React.FC<CarModalProps> = ({
   isOpen,
   onClose,
   onBrandSubmit,
+  models,
   brands,
-  searchValue,
-  handleInputChange,
   selectedModel,
   onSave,
   onModelChange,
 }) => {
+  const [selectedBrand, setSelectedBrand] = useState<string>('');
+
+  useEffect(() => {
+    if (isOpen) {
+      setSelectedBrand("");
+    }
+  }, [isOpen]); 
+
+  const handleBrandClick = (brand: string) => {
+    setSelectedBrand(brand);
+    if (onBrandSubmit) {
+      onBrandSubmit(brand);
+    }
+  };
+
   const handleModelChange = (event: ChangeEvent<HTMLSelectElement>) => {
     if (onModelChange) {
       onModelChange(event);
     }
   };
 
+  const filteredBrands = selectedBrand ? [selectedBrand] : brands;
+
   return (
     <div className='car-modal-container'>
       <Modal isOpen={isOpen} onClose={onClose}>
-        <Input
-          placeholder='Sök bilmärke'
-          onSubmit={onBrandSubmit}
-          value={searchValue}
-          onChange={handleInputChange}
+        <ListComponent
+          items={filteredBrands}
+          onItemClick={handleBrandClick}
+          selectedItem={selectedBrand}
         />
 
-        {brands.length > 0 && (
+        {models.length > 0 && selectedBrand && ( 
           <>
             <Select
-              options={brands}
+              options={models}
               value={selectedModel}
               onChange={handleModelChange}
               placeholder='Välj en modell'

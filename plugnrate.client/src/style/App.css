@@ -1,8 +1,4 @@
-﻿#root {
-    max-width: 1280px;
-    width: 100%;
-}
-
+﻿
 :root {
     font-family: 'Lato';
     line-height: 1.5;
@@ -21,12 +17,12 @@
     --tertriary-blue: #5E6472;
     --primary-hover: #89C8D2;
     --secondary-hover: #F2E0A6;
-    --gap: 16px
+    --gap: 16px;
+
   }
   
   body {
     margin: 0;
-    display: flex;
     min-width: 320px;
     min-height: 100vh;
   }

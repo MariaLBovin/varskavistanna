@@ -106,6 +106,7 @@ const App: React.FC = () => {
           chargingStations={nearestStationsData.stations}
         />
       </div>
+      <div className='content-container'>
       {loading ? (
         <Loader />
       ) : showResult ? (
@@ -117,7 +118,6 @@ const App: React.FC = () => {
           finalBattery={finalBattery}
         />
       ) : (
-        <div className="search-container">
           <SearchComponent
             onCalculateRoute={handleRouteResult}
             onSetCarDetails={handleSetCarDetails}
@@ -126,8 +126,8 @@ const App: React.FC = () => {
             origin={origin}
             destination={destination}
           />
-        </div>
       )}
+      </div>
     </>
   );
 };

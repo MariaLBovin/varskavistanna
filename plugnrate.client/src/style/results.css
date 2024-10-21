@@ -1,5 +1,37 @@
+
 .results-container {
     display: flex;
     flex-direction: column;
     gap: var(--gap);
+}
+.results-container svg {
+    align-self: center;
+}
+.result-button-container {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+}
+@media screen and (min-width: 750px) {
+    .result-outer {
+        max-height: 80vh;
+
+    }
+    .results-container{
+        max-height: 80vh;
+        overflow-y: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    .results-container::-webkit-scrollbar {
+        display: none;
+      }
+    .scroll-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        max-height: 70vh;
+    }
+    
 }

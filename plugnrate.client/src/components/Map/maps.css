@@ -1,5 +1,10 @@
 .maps-container-wrapper {
-    width: 100%;
-    height: 50vh;
+    width: 100vw;
+    height: 60vh;
     background-color: blue;
+}
+@media screen and (min-width: 750px) {
+    .maps-container-wrapper{
+        height: 100vh;
+    }
 }

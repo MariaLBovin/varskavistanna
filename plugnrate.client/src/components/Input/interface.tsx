@@ -4,7 +4,7 @@ export interface IInputProps {
     label?: string,
     placeholder: string,
     value? :string,
-    isEmpty: boolean,
+    isEmpty?: boolean,
     onSubmit?: (value: string) => void,
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
     ref: ForwardedRef<HTMLInputElement>

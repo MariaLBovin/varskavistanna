@@ -1,0 +1,21 @@
+.content-container {
+    padding: 0 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+@media screen and (min-width: 750px) {
+    .content-container {
+        position: absolute;
+        top: 3rem;
+        left: 5rem;
+        background-color: white;
+        padding: 2rem 5rem;
+        border: 1px solid black;
+        border-radius: 5px;
+        width: 250px;
+        margin: 0;
+    }
+}
