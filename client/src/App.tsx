@@ -21,9 +21,9 @@ const App: React.FC = () => {
   const [showResult, setShowResult] = useState<boolean>(false);
   const [origin, setOrigin] = useState<string>('');
   const [destination, setDestination] = useState<string>('');
-  const [selectedCarDetails, setSelectedCarDetails] = useState<Car | null>(null);
-  const [distance, setDistance] = useState<string>('');
-  const [duration, setDuration] = useState<string>("");
+  const [, setSelectedCarDetails] = useState<Car | null>(null);
+  const [, setDistance] = useState<string>('');
+  const [, setDuration] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const [finalBattery, setFinalBattery] = useState<number>(0);
   const [hasError, setHasError] = useState<boolean>(false); 
@@ -116,6 +116,7 @@ const App: React.FC = () => {
           startAdress={origin}
           endAddress={destination}
           finalBattery={finalBattery}
+
         />
       ) : (
           <SearchComponent
