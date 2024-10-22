@@ -1,10 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getDistanceBetweenPoints = exports.nearbyPlaces = exports.chargingStations = exports.helloWorld = void 0;
+/**
+ * Import function triggers from their respective submodules:
+ *
+ * import {onCall} from 'firebase-functions/v2/https';
+ * import {onDocumentWritten} from 'firebase-functions/v2/firestore';
+ *
+ * See a full list of supported triggers at https://firebase.google.com/docs/functions
+ */
 const https_1 = require("firebase-functions/v2/https");
 const logger = require("firebase-functions/logger");
 const google_maps_services_js_1 = require("@googlemaps/google-maps-services-js");
 const axios_1 = require("axios");
+const dotenv = require("dotenv");
+const v2_1 = require("firebase-functions/v2");
+dotenv.config();
 const client = new google_maps_services_js_1.Client({});
 const handleCors = (response) => {
     response.set('Access-Control-Allow-Origin', '*');
@@ -35,15 +46,15 @@ exports.chargingStations = (0, https_1.onRequest)(async (request, response) => {
     try {
         const apiResponse = await axios_1.default.get('https://api.openchargemap.io/v3/poi/', {
             params: {
-                output: 'JSON',
+                output: 'json',
                 latitude: latitude,
                 longitude: longitude,
-                distance: radius,
-                distanceunit: 'km',
+                maxdistance: 0,
                 maxresults: 50,
                 key: process.env.OPENCHARGER_API_KEY,
             },
         });
+        logger.info(v2_1.params);
         const filteredStations = apiResponse.data.filter((station) => {
             var _a, _b;
             return (((_a = station.StatusType) === null || _a === void 0 ? void 0 : _a.IsOperational) === true &&
@@ -78,6 +89,7 @@ exports.nearbyPlaces = (0, https_1.onRequest)(async (request, response) => {
             },
             timeout: 1000,
         });
+        logger.info(v2_1.params);
         logger.info('Nearby Places API Response:', apiResponse.data.results);
         response.json(apiResponse.data.results);
     }
@@ -94,7 +106,8 @@ exports.getDistanceBetweenPoints = (0, https_1.onRequest)(async (request, respon
     }
     const { originLat, originLng, destLat, destLng } = request.query;
     if (!originLat || !originLng || !destLat || !destLng) {
-        response.status(400).send('Origin and destination are required');
+        response.status(400).
+            send('Origin and destination coordinates are required');
         return;
     }
     try {
@@ -103,11 +116,11 @@ exports.getDistanceBetweenPoints = (0, https_1.onRequest)(async (request, respon
             destination: `${destLat},${destLng}`,
             key: process.env.GOOGLE_API_KEY,
         };
+        console.log(params);
         const apiResponse = await axios_1.default.get('https://maps.googleapis.com/maps/api/directions/json', { params });
         const route = apiResponse.data.routes[0];
         if (route) {
             const distanceInMeters = route.legs[0].distance.value;
-            logger.info('', distanceInMeters);
             response.json({ distanceInMeters });
         }
         else {
