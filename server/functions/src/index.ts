@@ -1,5 +1,3 @@
-
-
 /**
  * Import function triggers from their respective submodules:
  *
@@ -8,11 +6,12 @@
  *
  * See a full list of supported triggers at https://firebase.google.com/docs/functions
  */
-const functions = require('firebase-functions');
-const express = require('express');
-const {Client} = require('@googlemaps/google-maps-services-js');
-const cors = require('cors');
-const axios = require('axios');
+import * as functions from 'firebase-functions';
+import * as express from 'express';
+import {Client} from '@googlemaps/google-maps-services-js';
+import * as cors from 'cors';
+import axios from 'axios';
+import {Request, Response} from 'express';
 
 
 const app = express();
@@ -30,26 +29,19 @@ app.get('/hello', (req: any, res: { send: (arg0: string) => void; }) => {
 });
 
 // Ny rutt för att söka laddstationer
-app.get('/charging-stations', async (
-  req: {query: { latitude: string; longitude: string; radius: string; };},
-  res: {json: (arg0: any) => void;
-    status: (arg0: number) => { (): any;
-    new(): any; send: { (arg0: string): void; new(): any; }; };}
-) => {
+app.get('/charging-stations', async (req: Request, res: Response) => {
   const {latitude, longitude, radius} = req.query;
 
   if (!latitude || !longitude) {
     return res.status(400).send('Latitude and longitude are required');
   }
 
-  console.log('Received request with params:', {latitude, longitude, radius});
-
   try {
     const response = await axios.get('https://api.openchargemap.io/v3/poi/', {
       params: {
         output: 'json',
-        latitude: latitude,
-        longitude: longitude,
+        latitude: latitude as string,
+        longitude: longitude as string,
         maxdistance: radius || 5,
         maxresults: 50,
         key: OPENCHARGE_KEY,
@@ -58,18 +50,14 @@ app.get('/charging-stations', async (
 
     console.log('API Response:', response.data);
 
-    res.json(response.data);
+    return res.json(response.data);
   } catch (error) {
     console.error('Error fetching charging stations:', error);
-    res.status(500).send('Error fetching charging stations');
+    return res.status(500).send('Error fetching charging stations');
   }
 });
 
-app.get('/nearby-places', async (req:
-  {query: {latitude: any; longitude: any; radius: any; type: any;};},
-res: {status: (arg0: number) => { (): any; new(): any; send:
-  {(arg0: string): void; new(): any; }; };
-  json: (arg0: any) => void; }) => {
+app.get('/nearby-places', async (req: Request, res: Response) => {
   const {latitude, longitude, radius, type} = req.query;
 
   if (!latitude || !longitude || !type) {
@@ -81,28 +69,20 @@ res: {status: (arg0: number) => { (): any; new(): any; send:
   try {
     const response = await client.placesNearby({
       params: {
-        location: `${latitude},${longitude}`,
-        radius: radius || '1500',
-        type: type,
+        location: {lat: Number(latitude), lng: Number(longitude)},
+        radius: radius ? Number(radius) : 1500,
+        type: type as string,
         key: GOOGLE_API_KEY,
       },
       timeout: 1000,
     });
 
     console.log('Nearby Places API Response:', response.data.results);
-    res.json(response.data.results);
+    return res.json(response.data.results);
   } catch (error) {
     console.error('Error fetching nearby places:', error);
-    res.status(500).send('Error fetching nearby places');
+    return res.status(500).send('Error fetching nearby places');
   }
 });
 
 exports.api = functions.https.onRequest(app);
-
-// Start writing functions
-// https://firebase.google.com/docs/functions/typescript
-
-// export const helloWorld = onRequest((request, response) => {
-//   logger.info('Hello logs!', {structuredData: true});
-//   response.send('Hello from Firebase!');
-// });
