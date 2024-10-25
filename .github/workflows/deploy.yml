@@ -27,7 +27,7 @@ jobs:
       - name: Deploy frontend to Vercel
         working-directory: client
         env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_API_TOKEN }}
         run: |
           npx vercel --prod --confirm
 
