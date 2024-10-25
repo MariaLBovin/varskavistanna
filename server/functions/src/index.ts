@@ -73,7 +73,7 @@ export const chargingStations = onRequest(async (request, response) => {
         'X-Goog-Api-Key': process.env.GOOGLE_API_KEY,
         'X-Goog-FieldMask': `
         places.displayName,
-        places.formattedAddress,
+        places.shortFormattedAddress,
         places.location
       `.replace(/\s+/g, ''),
       },

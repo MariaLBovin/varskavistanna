@@ -1,5 +1,5 @@
 export interface IChargingStation {
-  formattedAddress: string;
+  shortFormattedAddress: string;
   location: {
     latitude: number;
     longitude: number;

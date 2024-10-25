@@ -2,9 +2,11 @@ import { IChargingStopProps } from "./interface";
 import './display.css';
 
 const Display: React.FC<IChargingStopProps> = ({ stopName, address, batteryLevel, chargingIcon }) => {
-  // console.log(address);
-  
-  const [street, town] = address.split(",").map(part => part.trim());
+
+  const parts = address.split(",").map(part => part.trim());
+
+  const street = parts.length > 1 ? parts.slice(0, -1).join(', ') : parts[0]; 
+  const town = parts[parts.length - 1]; 
 
   return (
     <article className="display-container">

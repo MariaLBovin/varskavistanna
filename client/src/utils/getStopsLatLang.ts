@@ -10,17 +10,15 @@ export const getStopLatLng = (
     const previousPoint = pathPoints[i - 1];
     const currentPoint = pathPoints[i];
 
-    // Beräkna avståndet mellan varje punkt
+
     const segmentDistance = google.maps.geometry.spherical.computeDistanceBetween(
       previousPoint,
       currentPoint
-    ) / 1000; // i kilometer
+    ) / 1000; 
 
     accumulatedDistance += segmentDistance;
 
-    // Om vi når eller passerar stopDistance, returnera den exakta positionen
     if (accumulatedDistance >= stopDistance) {
-      console.log('Exakt position längs vägen:', currentPoint.lat(), currentPoint.lng());
       return currentPoint;
     }
   }

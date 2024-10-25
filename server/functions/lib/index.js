@@ -63,12 +63,12 @@ exports.chargingStations = (0, https_1.onRequest)(async (request, response) => {
                 'X-Goog-Api-Key': process.env.GOOGLE_API_KEY,
                 'X-Goog-FieldMask': `
         places.displayName,
-        places.formattedAddress,
+        places.shortFormattedAddress,
         places.location
       `.replace(/\s+/g, ''),
             },
         });
-        logger.info('Fetched data from Google Places:', apiResponse.data);
+        logger.info('Fetched data from Google Places:', apiResponse.data.places);
         response.json(apiResponse.data.places);
     }
     catch (error) {

@@ -4,7 +4,7 @@ import { findNextChargingStop } from "./findNextChargingStop";
 import { getStopLatLng } from "./getStopsLatLang";
 
 export const calculateNextStops = async (
-  route:google.maps.DirectionsRoute,
+  route: google.maps.DirectionsRoute,
   remainingDistance: number,
   totalDistanceKm: number,
   carRange: number,
@@ -62,8 +62,7 @@ export const calculateNextStops = async (
       selectedFilter,
       radius
     );
-    console.log(nearestStop);
-    
+
     if (!nearestStop) {
       radius += 1000;
       return {
@@ -76,8 +75,7 @@ export const calculateNextStops = async (
     }
 
     chargingStations.push(nearestStop);
-    console.log(chargingStations);
-    
+
     const stopLatLng = new google.maps.LatLng(
       nearestStop.location.latitude,
       nearestStop.location.longitude

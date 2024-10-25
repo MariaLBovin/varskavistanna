@@ -43,7 +43,6 @@ export const calculateRouteData = async (
     if (!firstStop) {
       const batteryUsed = (totalDistanceKm / carRange) * 100;
       const finalBattery = Math.round(100 - batteryUsed);
-      console.log("No charging station needed, total distance:", totalDistanceKm);
 
       setDistance(leg.distance?.text || "Distance not available");
       setDuration(leg.duration?.text || "Duration not available");
@@ -52,7 +51,6 @@ export const calculateRouteData = async (
       setFinalBattery(finalBattery);
       return;
     }
-    console.log(remainingDistance);
         
     const { chargingStations, batteryLevels, finalBattery } =
       await calculateNextStops(
@@ -103,7 +101,6 @@ export const calculateRouteData = async (
         remainingBattery: batteryLevels[index + 1],
       })),
     ];
-    console.log(allStops);
 
     setDistance(leg.distance?.text || "Distance not available");
     setDuration(leg.duration?.text || "Duration not available");

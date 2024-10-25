@@ -7,7 +7,7 @@ export const calculateFirstStop = async (
   leg: google.maps.DirectionsLeg,
   carRange: number,
   selectedFilter: string | null,
-  route:google.maps.DirectionsRoute
+  route: google.maps.DirectionsRoute
 ): Promise<{
   firstStop: IChargingStation | null;
   remainingDistance: number;
@@ -31,10 +31,6 @@ export const calculateFirstStop = async (
 
   const firstStopRange = carRange * 0.85;
   const firstStopPosition = getStopLatLng(route, firstStopRange);
-  // console.log('bilens räckvidd första sträckan: ', firstStopRange);
-  
-  // console.log(firstStopPosition?.lat(), firstStopPosition?.lng());
-  
 
   let currentBattery = 100;
   const radius = 20000;
@@ -71,7 +67,6 @@ export const calculateFirstStop = async (
     leg.start_location.lng()
   );
 
-  
   const stopLatLng = new google.maps.LatLng(
     nearestStop.location.latitude,
     nearestStop.location.longitude
@@ -82,8 +77,6 @@ export const calculateFirstStop = async (
     stopLatLng.toJSON()
   );
   const distanceInKm = Math.round(distanceInMeters / 1000);
-  console.log('första sträckans körda km: ',distanceInKm);
-  
 
   const batteryUsed = (distanceInKm / carRange) * 100;
   const batteryLeft = Math.round(currentBattery - batteryUsed);

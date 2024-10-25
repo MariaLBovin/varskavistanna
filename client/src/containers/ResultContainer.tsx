@@ -124,7 +124,7 @@ const ResultContainer: React.FC<IResultContainerProps> = ({
               <Display
                 key={station.displayName.text ?? ""}
                 stopName={station.displayName.text ?? ""}
-                address={station.formattedAddress}
+                address={station.shortFormattedAddress}
                 batteryLevel={remainingBattery[index] || 0}
                 chargingIcon={<IconBattery />}
               />
