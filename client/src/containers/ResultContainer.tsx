@@ -114,7 +114,6 @@ const ResultContainer: React.FC<IResultContainerProps> = ({
         >
           <Display
             stopName={"Min position"}
-            stopOperator=''
             address={startAdress}
             batteryLevel={100}
             chargingIcon={<IconBattery />}
@@ -123,16 +122,9 @@ const ResultContainer: React.FC<IResultContainerProps> = ({
           {chargingStops.map((station, index) => (
             <>
               <Display
-                key={station.id ?? ""}
-                stopName={station.AddressInfo.Title ?? ""}
-                stopOperator={
-                  station.OperatorInfo.Title === "(Unknown Operator)"
-                    ? ""
-                    : station.OperatorInfo.Title ?? ""
-                }
-                address={`${station.AddressInfo.AddressLine1 ?? ""}, ${
-                  station.AddressInfo.Postcode ?? ""
-                }, ${station.AddressInfo.Town ?? ""}`}
+                key={station.displayName.text ?? ""}
+                stopName={station.displayName.text ?? ""}
+                address={station.formattedAddress}
                 batteryLevel={remainingBattery[index] || 0}
                 chargingIcon={<IconBattery />}
               />
@@ -141,7 +133,6 @@ const ResultContainer: React.FC<IResultContainerProps> = ({
           ))}
           <Display
             stopName={"Slutdestination"}
-            stopOperator=''
             address={endAddress}
             batteryLevel={finalBattery}
             chargingIcon={<IconBattery />}
@@ -169,8 +160,8 @@ const ResultContainer: React.FC<IResultContainerProps> = ({
           onClick={() => {
             if (startCoords && endCoords) {
               const waypoints = chargingStops.map((stop) => ({
-                Lat: stop.AddressInfo.Latitude,
-                Long: stop.AddressInfo.Longitude,
+                Lat: stop.location.latitude,
+                Long: stop.location.longitude,
               }));
         
               goToGoogleMaps(startCoords, endCoords, waypoints);

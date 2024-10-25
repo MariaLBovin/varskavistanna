@@ -43,24 +43,33 @@ exports.chargingStations = (0, https_1.onRequest)(async (request, response) => {
         return;
     }
     logger.info('Received request with params:', { latitude, longitude, radius });
+    const requestBody = {
+        includedTypes: ['electric_vehicle_charging_station'],
+        maxResultCount: 10,
+        locationRestriction: {
+            circle: {
+                center: {
+                    latitude: latitude,
+                    longitude: longitude,
+                },
+                radius: radius || 50000,
+            },
+        },
+    };
     try {
-        const apiResponse = await axios_1.default.get('https://api.openchargemap.io/v3/poi/', {
-            params: {
-                output: 'json',
-                latitude: latitude,
-                longitude: longitude,
-                maxdistance: 0,
-                maxresults: 50,
-                key: process.env.OPENCHARGER_API_KEY,
+        const apiResponse = await axios_1.default.post('https://places.googleapis.com/v1/places:searchNearby', requestBody, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Goog-Api-Key': process.env.GOOGLE_API_KEY,
+                'X-Goog-FieldMask': `
+        places.displayName,
+        places.formattedAddress,
+        places.location
+      `.replace(/\s+/g, ''),
             },
         });
-        logger.info(v2_1.params);
-        const filteredStations = apiResponse.data.filter((station) => {
-            var _a, _b;
-            return (((_a = station.StatusType) === null || _a === void 0 ? void 0 : _a.IsOperational) === true &&
-                ((_b = station.OperatorInfo) === null || _b === void 0 ? void 0 : _b.Title));
-        });
-        response.json(filteredStations);
+        logger.info('Fetched data from Google Places:', apiResponse.data);
+        response.json(apiResponse.data.places);
     }
     catch (error) {
         logger.error('Error fetching charging stations:', error);

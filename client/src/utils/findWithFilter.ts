@@ -17,8 +17,8 @@ export const findWithFilter = async (
   const filteredStations = await Promise.all(
     stations.map(async (station: IChargingStation) => {
       const nearbyPlaces = await fetchNearbyPlaces(
-        station.AddressInfo.Latitude,
-        station.AddressInfo.Longitude,
+        station.geometry.location.lat,
+        station.geometry.location.lng,
         selectedFilter
       );
       return nearbyPlaces.length > 0 ? station : null;

@@ -1,27 +1,11 @@
 export interface IChargingStation {
-  id: number;
-  AddressInfo: {
-    Title: string;
-    AddressLine1: string;
-    AddressLine2?: string | null;
-    Town: string;
-    Postcode?: string | null;
-    Country: {
-      Title: string;
-    };
-    Latitude: number;
-    Longitude: number;
+  formattedAddress: string;
+  location: {
+    latitude: number;
+    longitude: number;
   };
-  Connections: Array<{
-    Level: {
-      IsFastChargeCapale: boolean;
-    };
-  }>;
-  NumberOfPoints: number;
-  StatusType: {
-    IsOperational?: boolean | null;
+  displayName: {
+    text: string;
+    languageCode: string; 
   };
-  OperatorInfo: {
-    Title: string,
-  }
 }

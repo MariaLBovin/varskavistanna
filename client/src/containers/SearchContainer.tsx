@@ -117,7 +117,6 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
     setModels([]);
     setSelectedModel("");
     setSelectedCarDetails(null);
-    console.log(brands);
     
     const allBrands = await fetchAllCarBrands();
     setBrands(allBrands);
@@ -135,7 +134,6 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
       destinationRef.current.value = "";
     }
   }
-
   
   const handleClear = () => {
     setBrand("");

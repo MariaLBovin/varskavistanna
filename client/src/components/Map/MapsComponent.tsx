@@ -15,9 +15,7 @@ const MapsComponent: React.FC<IMapsComponentProps> = ({
     mapTypeControl: false,
     streetViewControl: false,
   };
-  console.log(directionsResponse);
-  
-  
+
   return (
     <GoogleMap
       center={center}
@@ -30,9 +28,9 @@ const MapsComponent: React.FC<IMapsComponentProps> = ({
         <DirectionsRenderer directions={directionsResponse} />
       )}
       {chargingStations.map((station: IChargingStation) => (
-        <Marker key={station.id} position={{
-          lat: station.AddressInfo.Latitude,
-          lng: station.AddressInfo.Longitude,
+        <Marker key={station.displayName.text} position={{
+          lat: station.location.latitude,
+          lng: station.location.longitude,
         }} />
       ))}
     </GoogleMap>

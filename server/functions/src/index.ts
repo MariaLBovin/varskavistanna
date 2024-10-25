@@ -52,32 +52,42 @@ export const chargingStations = onRequest(async (request, response) => {
 
   logger.info('Received request with params:', {latitude, longitude, radius});
 
+  const requestBody = {
+    includedTypes: ['electric_vehicle_charging_station'],
+    maxResultCount: 10,
+    locationRestriction: {
+      circle: {
+        center: {
+          latitude: latitude,
+          longitude: longitude,
+        },
+        radius: radius || 50000,
+      },
+    },
+  };
+
   try {
-    const apiResponse = await axios.get('https://api.openchargemap.io/v3/poi/', {
-      params: {
-        output: 'json',
-        latitude: latitude,
-        longitude: longitude,
-        maxdistance: 0,
-        maxresults: 50,
-        key: process.env.OPENCHARGER_API_KEY,
+    const apiResponse = await axios.post('https://places.googleapis.com/v1/places:searchNearby', requestBody, {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Goog-Api-Key': process.env.GOOGLE_API_KEY,
+        'X-Goog-FieldMask': `
+        places.displayName,
+        places.formattedAddress,
+        places.location
+      `.replace(/\s+/g, ''),
       },
     });
 
-    logger.info(params);
-    const filteredStations = apiResponse.data.filter((station: any) => {
-      return (
-        station.StatusType?.IsOperational === true &&
-          station.OperatorInfo?.Title
-      );
-    });
+    logger.info('Fetched data from Google Places:', apiResponse.data.places);
 
-    response.json(filteredStations);
+    response.json(apiResponse.data.places);
   } catch (error) {
     logger.error('Error fetching charging stations:', error);
     response.status(500).send('Error fetching charging stations');
   }
 });
+
 
 export const nearbyPlaces = onRequest(async (request, response) => {
   handleCors(response);
