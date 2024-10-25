@@ -29,15 +29,3 @@ jobs:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: npx vercel --prod --token $VERCEL_TOKEN
 
-
-      - name: Install backend dependencies
-        working-directory: server
-        run: |
-          npm install
-
-      - name: Deploy backend to Firebase
-        working-directory: server
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        run: |
-          npx firebase deploy --only functions
