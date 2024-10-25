@@ -6,12 +6,14 @@
  *
  * See a full list of supported triggers at https://firebase.google.com/docs/functions
  */
+
 import {onRequest} from 'firebase-functions/v2/https';
 import * as logger from 'firebase-functions/logger';
 import {Client} from '@googlemaps/google-maps-services-js';
 import axios from 'axios';
 import * as dotenv from 'dotenv';
 import {params} from 'firebase-functions/v2';
+
 
 dotenv.config();
 
@@ -44,6 +46,7 @@ export const chargingStations = onRequest(async (request, response) => {
   }
 
   const {latitude, longitude, radius} = request.query;
+
 
   if (!latitude || !longitude) {
     response.status(400).send('Latitude and longitude are required');
@@ -99,11 +102,12 @@ export const nearbyPlaces = onRequest(async (request, response) => {
 
   const {latitude, longitude, radius, type} = request.query as
     {latitude: string; longitude: string; radius?: string, type: string};
-
-  if (!latitude || !longitude || !type) {
-    response.status(400).send('Latitude, longitude, and type are required');
-    return;
+    return res.json(response.data);
+  } catch (error) {
+    console.error('Error fetching charging stations:', error);
+    return res.status(500).send('Error fetching charging stations');
   }
+});
 
   logger.info('Request with params:', {latitude, longitude, radius, type});
 
@@ -114,10 +118,12 @@ export const nearbyPlaces = onRequest(async (request, response) => {
         radius: parseInt(radius as string, 10) || 1500,
         type: type as string,
         key: process.env.GOOGLE_API_KEY as string,
+
       },
       timeout: 1000,
     });
     logger.info(params);
+
 
     logger.info('Nearby Places API Response:', apiResponse.data.results);
     response.json(apiResponse.data.results);
