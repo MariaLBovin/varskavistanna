@@ -1,17 +1,17 @@
 import { IChargingStation } from "../interfaces/IChargingStations";
-import { getDistanceBetweenPoints } from "../services/fetchDistanceBetweenPoints"; // Din distansfunktion
+import { getDistanceBetweenPoints } from "../services/fetchDistanceBetweenPoints"; 
 
 export const findNearestStop = async (
   position: google.maps.LatLngLiteral,
   stations: IChargingStation[]
 ): Promise<IChargingStation | null > => {
   if (stations.length === 0) return null;
-
+  
   try {
     const distancePromises = stations.map(async (station) => {
       const distance = await getDistanceBetweenPoints(
         { lat: position.lat, lng: position.lng }, 
-        { lat: station.AddressInfo.Latitude, lng: station.AddressInfo.Longitude }
+        { lat: station.location.latitude, lng: station.location.longitude }
       ); 
       return { station, distance };
     });

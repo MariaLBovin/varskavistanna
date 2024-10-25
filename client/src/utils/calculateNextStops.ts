@@ -4,7 +4,7 @@ import { findNextChargingStop } from "./findNextChargingStop";
 import { getStopLatLng } from "./getStopsLatLang";
 
 export const calculateNextStops = async (
-  leg: google.maps.DirectionsLeg,
+  route: google.maps.DirectionsRoute,
   remainingDistance: number,
   totalDistanceKm: number,
   carRange: number,
@@ -29,22 +29,23 @@ export const calculateNextStops = async (
   }
 
   const nextStopRange = carRange * 0.65;
+
   const batteryLevels: number[] = [currentBattery];
   const chargingStations: IChargingStation[] = [];
   let previousStop = new google.maps.LatLng(
-    firstStop.AddressInfo.Latitude,
-    firstStop.AddressInfo.Longitude
+    firstStop.location.latitude,
+    firstStop.location.longitude
   );
 
   let totalBatteryUsed = 0;
-  let radius = 30;
+  let radius = 20000;
 
   while (remainingDistance > nextStopRange) {
     const nextStopKm = Math.round(
       totalDistanceKm - remainingDistance + nextStopRange
     );
 
-    const nextStopPosition = getStopLatLng(leg, nextStopKm);
+    const nextStopPosition = getStopLatLng(route, nextStopKm);
 
     if (!nextStopPosition) {
       return {
@@ -61,8 +62,9 @@ export const calculateNextStops = async (
       selectedFilter,
       radius
     );
+
     if (!nearestStop) {
-      radius += 10;
+      radius += 1000;
       return {
         chargingStations: [],
         remainingDistance: 0,
@@ -75,13 +77,15 @@ export const calculateNextStops = async (
     chargingStations.push(nearestStop);
 
     const stopLatLng = new google.maps.LatLng(
-      nearestStop.AddressInfo.Latitude,
-      nearestStop.AddressInfo.Longitude
+      nearestStop.location.latitude,
+      nearestStop.location.longitude
     );
+
     const distanceInMeters = await getDistanceBetweenPoints(
       previousStop.toJSON(),
       stopLatLng.toJSON()
     );
+
     const distanceInKm = Math.round(distanceInMeters / 1000);
 
     const batteryUsed = (distanceInKm / carRange) * 100;
@@ -116,7 +120,6 @@ export const calculateNextStops = async (
   }
 
   const finalBattery = Math.max(0, currentBattery - totalBatteryUsed);
-  console.log(batteryLevels, finalBattery);
 
   return {
     chargingStations,

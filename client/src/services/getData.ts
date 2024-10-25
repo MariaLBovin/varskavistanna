@@ -1,14 +1,9 @@
 import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
 import { db } from './firebaseConfig'; 
 
-// const capitalizeFirstLetter = (str: string) => {
-//   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-// };
-
 const capitalizeBrandName = (brand: string) => {
   return brand.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
 };
-
 
 
 export const fetchAllCarBrands = async () => {
@@ -21,7 +16,6 @@ export const fetchAllCarBrands = async () => {
       brands.push(doc.id);
     });
     
-    console.log('Fetched brands:', brands);
     return brands;
   } catch (error) {
     console.error('Error fetching car brands:', error);
@@ -37,7 +31,6 @@ export const fetchCarsByBrand = async (brand: string) => {
 
     if (docSnapshot.exists()) {
       const data = docSnapshot.data();
-      console.log(data);
 
       
       if (data && data.models) {

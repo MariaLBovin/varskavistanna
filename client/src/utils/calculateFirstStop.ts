@@ -6,33 +6,34 @@ import { getStopLatLng } from "./getStopsLatLang";
 export const calculateFirstStop = async (
   leg: google.maps.DirectionsLeg,
   carRange: number,
-  selectedFilter: string | null
+  selectedFilter: string | null,
+  route: google.maps.DirectionsRoute
 ): Promise<{
   firstStop: IChargingStation | null;
   remainingDistance: number;
   currentBattery: number;
   batteryLeft: number;
 }> => {
-  const totalDistance = (leg.distance?.value || 0) / 1000; 
-  const requiredRange = totalDistance > (carRange * 0.85);
+  const totalDistance = (leg.distance?.value || 0) / 1000;
+  const requiredRange = totalDistance > carRange * 0.85;
 
   if (!requiredRange) {
     const batteryUsed = (totalDistance / carRange) * 100;
-    const remainingBattery = Math.max(0, 100 - batteryUsed); 
+    const remainingBattery = Math.max(0, 100 - batteryUsed);
 
     return {
       firstStop: null,
-      remainingDistance: totalDistance, 
-      currentBattery: 100, 
-      batteryLeft: remainingBattery, 
+      remainingDistance: totalDistance,
+      currentBattery: 100,
+      batteryLeft: remainingBattery,
     };
   }
 
-  const firstStopRange = carRange * 0.85; 
-  const firstStopPosition = getStopLatLng(leg, firstStopRange);
-  let currentBattery = 100;
-  const radius = 20;
+  const firstStopRange = carRange * 0.85;
+  const firstStopPosition = getStopLatLng(route, firstStopRange);
 
+  let currentBattery = 100;
+  const radius = 20000;
 
   if (!firstStopPosition) {
     return {
@@ -67,16 +68,19 @@ export const calculateFirstStop = async (
   );
 
   const stopLatLng = new google.maps.LatLng(
-    nearestStop.AddressInfo.Latitude,
-    nearestStop.AddressInfo.Longitude
+    nearestStop.location.latitude,
+    nearestStop.location.longitude
   );
 
-  const distanceInMeters = await getDistanceBetweenPoints(startLatLng.toJSON(), stopLatLng.toJSON());
+  const distanceInMeters = await getDistanceBetweenPoints(
+    startLatLng.toJSON(),
+    stopLatLng.toJSON()
+  );
   const distanceInKm = Math.round(distanceInMeters / 1000);
 
   const batteryUsed = (distanceInKm / carRange) * 100;
   const batteryLeft = Math.round(currentBattery - batteryUsed);
-  currentBattery = 80; // Anta att bilen laddar till 80% efter stopp
+  currentBattery = 80;
 
   const remainingDistance = totalDistance - distanceInKm;
 

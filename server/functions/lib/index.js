@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * Import function triggers from their respective submodules:
- *
- * import {onCall} from 'firebase-functions/v2/https';
- * import {onDocumentWritten} from 'firebase-functions/v2/firestore';
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
-const functions = require("firebase-functions");
-const express = require("express");
+
+exports.getDistanceBetweenPoints = exports.nearbyPlaces = exports.chargingStations = exports.helloWorld = void 0;
+
+
+const https_1 = require("firebase-functions/v2/https");
+const logger = require("firebase-functions/logger");
+
 const google_maps_services_js_1 = require("@googlemaps/google-maps-services-js");
 const cors = require("cors");
 const axios_1 = require("axios");
-const app = express();
-app.use(cors({ origin: ['https://localhost:5173'] }));
+
+const dotenv = require("dotenv");
+const v2_1 = require("firebase-functions/v2");
+dotenv.config();
+
 const client = new google_maps_services_js_1.Client({});
 const GOOGLE_API_KEY = functions.config().google.apikey;
 const OPENCHARGE_KEY = functions.config().openchargemap.api_key;
@@ -28,19 +28,36 @@ app.get('/charging-stations', async (req, res) => {
     if (!latitude || !longitude) {
         return res.status(400).send('Latitude and longitude are required');
     }
+
+    logger.info('Received request with params:', { latitude, longitude, radius });
+    const requestBody = {
+        includedTypes: ['electric_vehicle_charging_station'],
+        maxResultCount: 10,
+        locationRestriction: {
+            circle: {
+                center: {
+                    latitude: latitude,
+                    longitude: longitude,
+                },
+                radius: radius || 50000,
+            },
+        },
+    };
     try {
-        const response = await axios_1.default.get('https://api.openchargemap.io/v3/poi/', {
-            params: {
-                output: 'json',
-                latitude: latitude,
-                longitude: longitude,
-                maxdistance: radius || 5,
-                maxresults: 50,
-                key: OPENCHARGE_KEY,
+        const apiResponse = await axios_1.default.post('https://places.googleapis.com/v1/places:searchNearby', requestBody, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Goog-Api-Key': process.env.GOOGLE_API_KEY,
+                'X-Goog-FieldMask': `
+        places.displayName,
+        places.shortFormattedAddress,
+        places.location
+      `.replace(/\s+/g, ''),
             },
         });
-        console.log('API Response:', response.data);
-        return res.json(response.data);
+        logger.info('Fetched data from Google Places:', apiResponse.data.places);
+        response.json(apiResponse.data.places);
+
     }
     catch (error) {
         console.error('Error fetching charging stations:', error);
@@ -63,8 +80,45 @@ app.get('/nearby-places', async (req, res) => {
             },
             timeout: 1000,
         });
-        console.log('Nearby Places API Response:', response.data.results);
-        return res.json(response.data.results);
+
+        logger.info(v2_1.params);
+        logger.info('Nearby Places API Response:', apiResponse.data.results);
+        response.json(apiResponse.data.results);
+    }
+    catch (error) {
+        logger.error('Error fetching nearby places:', error);
+        response.status(500).send('Error fetching nearby places');
+    }
+});
+exports.getDistanceBetweenPoints = (0, https_1.onRequest)(async (request, response) => {
+    handleCors(response);
+    if (request.method === 'OPTIONS') {
+        response.status(204).send('');
+        return;
+    }
+    const { originLat, originLng, destLat, destLng } = request.query;
+    if (!originLat || !originLng || !destLat || !destLng) {
+        response.status(400).
+            send('Origin and destination coordinates are required');
+        return;
+    }
+    try {
+        const params = {
+            origin: `${originLat},${originLng}`,
+            destination: `${destLat},${destLng}`,
+            key: process.env.GOOGLE_API_KEY,
+        };
+        console.log(params);
+        const apiResponse = await axios_1.default.get('https://maps.googleapis.com/maps/api/directions/json', { params });
+        const route = apiResponse.data.routes[0];
+        if (route) {
+            const distanceInMeters = route.legs[0].distance.value;
+            response.json({ distanceInMeters });
+        }
+        else {
+            response.status(404).send('No routes found');
+        }
+
     }
     catch (error) {
         console.error('Error fetching nearby places:', error);

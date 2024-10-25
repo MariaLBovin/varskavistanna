@@ -1,21 +1,26 @@
-import { IChargingStation } from "../interfaces/IChargingStations"; 
+import { IChargingStation } from "../interfaces/IChargingStations";
 import { calculateFirstStop } from "./calculateFirstStop";
 import { calculateNextStops } from "./calculateNextStops";
 
 export const calculateRouteData = async (
   origin: string,
   destination: string,
-  setDirectionsResponse: (response: google.maps.DirectionsResult | null) => void,
+  setDirectionsResponse: (
+    response: google.maps.DirectionsResult | null
+  ) => void,
   setDistance: (distance: string) => void,
   setDuration: (duration: string) => void,
   carRange: number,
-  setNearestChargingStations: (stations: IChargingStation[], remainingBattery: number[], remainingDistance: number) => void,
+  setNearestChargingStations: (
+    stations: IChargingStation[],
+    remainingBattery: number[],
+    remainingDistance: number
+  ) => void,
   setFinalBattery: (battery: number) => void,
   selectedFilter: string | null,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handleError: (error: any) => void
 ) => {
-  
   const directionService = new google.maps.DirectionsService();
 
   try {
@@ -28,51 +33,58 @@ export const calculateRouteData = async (
     if (!results?.routes?.length) {
       handleError;
     }
-
+    const route = results.routes[0]
     const leg = results.routes[0].legs[0];
     const totalDistanceKm = (leg.distance?.value || 0) / 1000;
 
-
-    const { firstStop, remainingDistance, currentBattery, batteryLeft } = await calculateFirstStop(leg, carRange, selectedFilter);
+    const { firstStop, remainingDistance, currentBattery, batteryLeft } =
+      await calculateFirstStop(leg, carRange, selectedFilter, route);
 
     if (!firstStop) {
-      const batteryUsed = (totalDistanceKm / carRange) * 100; 
-      const finalBattery = Math.round(100 - batteryUsed); 
-      console.log("No charging station needed, total distance:", totalDistanceKm);
+      const batteryUsed = (totalDistanceKm / carRange) * 100;
+      const finalBattery = Math.round(100 - batteryUsed);
 
       setDistance(leg.distance?.text || "Distance not available");
       setDuration(leg.duration?.text || "Duration not available");
-      // setDirectionsResponse(results);
 
       setNearestChargingStations([], [], remainingDistance);
       setFinalBattery(finalBattery);
       return;
     }
-    const { chargingStations, batteryLevels, finalBattery } = await calculateNextStops(
-      leg,
-      remainingDistance,
-      totalDistanceKm,
-      carRange,
-      currentBattery,
-      selectedFilter,
-      firstStop
-    );
+        
+    const { chargingStations, batteryLevels, finalBattery } =
+      await calculateNextStops(
+        route,
+        remainingDistance,
+        totalDistanceKm,
+        carRange,
+        currentBattery,
+        selectedFilter,
+        firstStop
+      );
 
     const waypoints = [
-      { location: new google.maps.LatLng(firstStop.AddressInfo.Latitude, firstStop.AddressInfo.Longitude), stopover: true },
+      {
+        location: new google.maps.LatLng(
+          firstStop.location.latitude,
+          firstStop.location.longitude
+        ),
+        stopover: true,
+      },
       ...chargingStations.map((station) => ({
-        location: new google.maps.LatLng(station.AddressInfo.Latitude, station.AddressInfo.Longitude),
+        location: new google.maps.LatLng(
+          station.location.latitude,
+          station.location.longitude
+        ),
         stopover: true,
       })),
     ];
-    console.log('waypoints: ', waypoints);
-    
 
     const updatedResults = await directionService.route({
       origin,
       destination,
       travelMode: google.maps.TravelMode.DRIVING,
-      waypoints, 
+      waypoints,
       optimizeWaypoints: false,
     });
 
@@ -82,12 +94,12 @@ export const calculateRouteData = async (
     setDuration(updatedLeg.duration?.text || "Duration not available");
     setDirectionsResponse(updatedResults);
 
-    const allStops = [{ station: firstStop, remainingBattery: batteryLeft }, 
+    const allStops = [
+      { station: firstStop, remainingBattery: batteryLeft },
       ...chargingStations.map((station, index) => ({
         station,
-        remainingBattery: batteryLevels[index + 1]
-
-      }))
+        remainingBattery: batteryLevels[index + 1],
+      })),
     ];
 
     setDistance(leg.distance?.text || "Distance not available");
@@ -95,8 +107,8 @@ export const calculateRouteData = async (
     setDirectionsResponse(updatedResults);
 
     setNearestChargingStations(
-      allStops.map(stop => stop.station),
-      allStops.map(stop => stop.remainingBattery),
+      allStops.map((stop) => stop.station),
+      allStops.map((stop) => stop.remainingBattery),
       remainingDistance
     );
     setFinalBattery(finalBattery);
