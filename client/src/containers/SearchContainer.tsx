@@ -128,12 +128,14 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
 
   const handleOriginClick = () => {
     setOrigin("");
+    setIsOriginEmpty(false)
     if (originRef.current) {
       originRef.current.value = "";
     }
   };
   const handleDestinationClick = () => {
     setDestination("");
+    setIsDestinationEmpty(false)
     if (destinationRef.current) {
       destinationRef.current.value = "";
     }
