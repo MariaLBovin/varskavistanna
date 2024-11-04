@@ -2,9 +2,17 @@ import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
 import { db } from './firebaseConfig'; 
 
 const capitalizeBrandName = (brand: string) => {
-  return brand.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
-};
+  const uppercaseBrands = ["BMW"];
 
+  if (uppercaseBrands.includes(brand.toUpperCase())) {
+    return brand.toUpperCase(); 
+  }
+
+  return brand
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+};
 
 export const fetchAllCarBrands = async () => {
   try {
