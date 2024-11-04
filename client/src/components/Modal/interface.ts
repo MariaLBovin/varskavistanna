@@ -6,4 +6,6 @@ export interface ModalProps {
     onClose: () => void;
     titleId?: string; 
     descriptionId?: string; 
+    selectedBrand?: string;
+    onBack: () => void
 }

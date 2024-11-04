@@ -34,7 +34,7 @@ input::placeholder {
   }
   
 .input-error-message {
-    color: red;
+    color: grey;
     font-size: 14px;
     margin-top: 4px;
 }

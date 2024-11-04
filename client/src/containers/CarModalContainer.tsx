@@ -35,18 +35,24 @@ const CarModal: React.FC<CarModalProps> = ({
       onModelChange(event);
     }
   };
+  const handleBack= () => {
+    setSelectedBrand("");
+  };
 
   const filteredBrands = selectedBrand ? [selectedBrand] : brands;
 
   return (
     <div className='car-modal-container'>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} 
+      onClose={onClose}
+      onBack={handleBack}
+      selectedBrand={selectedBrand}
+      >
         <ListComponent
           items={filteredBrands}
           onItemClick={handleBrandClick}
           selectedItem={selectedBrand}
         />
-
         {models.length > 0 && selectedBrand && ( 
           <>
             <Select
