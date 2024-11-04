@@ -70,6 +70,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
       setSelectedCarDetails(modelDetails as unknown as Car);
       onSetCarDetails(modelDetails as unknown as Car);
     }
+    
   };
 
   const handleFilterChange = (selectedOption: string) => {
@@ -129,6 +130,13 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
       destinationRef.current.value = "";
     }
   };
+  const handleSaveCar = () => {
+    setIsCarModalOpen(false);
+    if (selectedCarDetails) {
+      setBrand(brand)
+      setSelectedModel(selectedModel);
+    }
+  };
 
   const handleClear = () => {
     setBrand("");
@@ -168,7 +176,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
       <Button
         variant='tertiary'
         text={
-          brand && selectedModel ? `${brand} ${selectedModel}` : "Sök bilmodell"
+          brand || selectedModel ? `${brand} ${selectedModel}` : "Sök bilmodell"
         }
         onClick={handleOpenCarModal}
       />
@@ -179,7 +187,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
           onBrandSubmit={handleBrandSubmit}
           models={models}
           selectedModel={selectedModel}
-          onSave={() => setIsCarModalOpen(false)}
+          onSave={handleSaveCar}
           searchValue={brand}
           brands={brands}
           onModelChange={handleModelChange}
