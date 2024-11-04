@@ -3,6 +3,7 @@ import { ModalProps } from "./interface";
 import Button from "../Button/Button";
 import "./modal.css";
 import IconX from "../../assets/icons/IconX";
+import IconChevronLeft from "../../assets/icons/IconChrevronLeft";
 
 const Modal = ({
   children,
@@ -10,6 +11,8 @@ const Modal = ({
   onClose,
   titleId,
   descriptionId,
+  selectedBrand,
+  onBack,
 }: ModalProps) => {
   const modalRef = useRef<HTMLDivElement | null>(null);
 
@@ -57,9 +60,18 @@ const Modal = ({
         ref={modalRef}
         onClick={(e) => e.stopPropagation}
       >
-        <div className='modal-close-button'>
+        <div className="modal-buttons">
+        {selectedBrand && (
+          <div className='modal-back-button'>
+            <Button variant="icon" icon={<IconChevronLeft/>} onClick={onBack} />
+          </div>
+        )}
+        <div className={selectedBrand ? 'modal-close-button' : 'modal-close-button-fixed'}>
+        
           <Button variant={"icon"} icon={<IconX/>} onClick={onClose}>
           </Button>
+        </div>
+        
         </div>
         <div className='modal-inner-children'>{children}</div>
       </div>

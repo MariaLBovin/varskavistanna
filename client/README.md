@@ -1,31 +1,41 @@
-# React + TypeScript + Vite
+# Electric Vehicle Route Planner
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+The Electric Vehicle Route Planner is a web application designed to help users plan their trips using electric vehicles (EVs). This application utilizes the Google Maps API, Google Places API, and Google Find Nearest Place to provide an intuitive route planning experience for EV drivers.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- **Route Planning**: Easily plan routes by entering an origin and a destination.
+- **Charging Station Locator**: Find nearby charging stations along your route using Google Places.
+- **Find based on filter**: Add a filter to your search to find nearest restaurant, café or other options
+- **Battery Level Management**: Keep track of battery levels and suggest charging stops based on vehicle specifications.
+- **User-friendly Interface**: Built with React and TypeScript, ensuring a smooth and responsive user experience.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Technology Stack
 
-- Configure the top-level `parserOptions` property like this:
+- **Frontend**: 
+  - React
+  - TypeScript
+  - HTML5
+  - CSS
+  - Vite
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+- **Backend**: 
+  - Google Firebase Functions
+  - Firestore for database management
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- **APIs**: 
+  - Google Maps API
+  - Google Places API
+  - Google Find Nearest Place
+
+## Room for improvment
+As almost all projects, there are room for improvments! 
+- **Stuff I am planning**: 
+  - Adding option to type in your own car if missing in list
+  - Improving error handling
+
+- **Stuff I would like to do if I ever have some extra spare time**: 
+  - Adding possibility to choose different filters for different legs of the trip
 

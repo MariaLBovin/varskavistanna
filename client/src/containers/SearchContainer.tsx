@@ -43,6 +43,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
 
   const [isOriginEmpty, setIsOriginEmpty] = useState<boolean>(false);
   const [isDestinationEmpty, setIsDestinationEmpty] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleBrandSubmit = async (brand: string) => {
     setBrand(brand);
@@ -70,6 +71,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
       setSelectedCarDetails(modelDetails as unknown as Car);
       onSetCarDetails(modelDetails as unknown as Car);
     }
+    
   };
 
   const handleFilterChange = (selectedOption: string) => {
@@ -77,24 +79,29 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
   };
 
   const calculateRoute = () => {
-    const originValue = originRef.current?.value || "";
-    const destinationValue = destinationRef.current?.value || "";
-
+    const originValue = originRef.current?.value.trim() || "";
+    const destinationValue = destinationRef.current?.value.trim() || "";
+  
     setOrigin(originValue);
     setDestination(destinationValue);
+  
+    const originEmpty = originValue === "";
+    const destinationEmpty = destinationValue === "";
+  
+    setIsOriginEmpty(originEmpty);
+    setIsDestinationEmpty(destinationEmpty);
 
-    setIsOriginEmpty(originValue === "");
-    setIsDestinationEmpty(destinationValue === "");
-
-    if (originValue && destinationValue) {
-      onCalculateRoute(
-        originValue,
-        destinationValue,
-        selectedCarDetails,
-        selectedFilter
-      );
+    if (!brand && !selectedModel) {
+      setErrorMessage("Vänligen välj en bilmodell eller ett märke.");
+    } else {
+      setErrorMessage(null); 
+    }
+  
+    if (!originEmpty && !destinationEmpty) {
+      onCalculateRoute(originValue, destinationValue, selectedCarDetails, selectedFilter);
     }
   };
+  
 
   const filterOptions = [
     { label: "Restaurang", value: "restaurant" },
@@ -115,19 +122,31 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
 
     const allBrands = await fetchAllCarBrands();
     setBrands(allBrands);
+
+  
   };
 
   const handleOriginClick = () => {
     setOrigin("");
+    setIsOriginEmpty(false)
     if (originRef.current) {
       originRef.current.value = "";
     }
   };
   const handleDestinationClick = () => {
     setDestination("");
+    setIsDestinationEmpty(false)
     if (destinationRef.current) {
       destinationRef.current.value = "";
     }
+  };
+  const handleSaveCar = () => {
+    setIsCarModalOpen(false);
+    if (selectedCarDetails) {
+      setBrand(brand)
+      setSelectedModel(selectedModel);
+    }
+
   };
 
   const handleClear = () => {
@@ -165,21 +184,25 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
           onClick={handleDestinationClick}
         />
       </Autocomplete>
-      <Button
+    <div className="search-button-plan">
+    <Button
         variant='tertiary'
         text={
-          brand && selectedModel ? `${brand} ${selectedModel}` : "Sök bilmodell"
+          brand || selectedModel ? `${brand} ${selectedModel}` : "Sök bilmodell"
         }
         onClick={handleOpenCarModal}
       />
+      {errorMessage && <span className='search-error-message'>{errorMessage}</span>}
       <div className={isCarModalOpen ? "car-modal-open" : "car-modal-closed"}>
+    </div>
+      
         <CarModal
           isOpen={isCarModalOpen}
           onClose={() => setIsCarModalOpen(false)}
           onBrandSubmit={handleBrandSubmit}
           models={models}
           selectedModel={selectedModel}
-          onSave={() => setIsCarModalOpen(false)}
+          onSave={handleSaveCar}
           searchValue={brand}
           brands={brands}
           onModelChange={handleModelChange}

@@ -19,12 +19,10 @@ const Input = forwardRef<HTMLInputElement, IInputProps>(
 
     const handleSubmit = (event: FormEvent) => {
       event.preventDefault();
-
-      if (onSubmit) {
-        if (value) {
-          onSubmit(value);
-        }
-        else {setError('Det här fältet är obligatoriskt')}
+      if (value && value.trim() !== "") {
+        onSubmit?.(value);
+      } else {
+        setError('Det här fältet är obligatoriskt');
       }
     };
 
@@ -52,11 +50,11 @@ const Input = forwardRef<HTMLInputElement, IInputProps>(
             </div>
           </div>
         </form>
-        {isEmpty || error && (
+        {isEmpty || error ? (
           <span className='input-error-message'>
             Detta fält är obligatoriskt
           </span>
-        )}
+        ) : null}
       </div>
     );
   }

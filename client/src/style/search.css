@@ -2,3 +2,13 @@
     display: flex;
     justify-content: space-between;
 }
+.search-button-plan {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.search-error-message {
+    color: grey;
+    font-size: 14px;
+    margin-top: 4px;
+}
