@@ -63,12 +63,12 @@ const Modal = ({
         <div className="modal-buttons">
         {selectedBrand && (
           <div className='modal-back-button'>
-            <Button variant="icon" icon={<IconChevronLeft/>} onClick={onBack} />
+            <Button variant="icon" icon={<IconChevronLeft/>} onClick={onBack} aria-label='Tillbaka' />
           </div>
         )}
         <div className={selectedBrand ? 'modal-close-button' : 'modal-close-button-fixed'}>
         
-          <Button variant={"icon"} icon={<IconX/>} onClick={onClose}>
+          <Button variant={"icon"} icon={<IconX/>} onClick={onClose} aria-label='Stäng'>
           </Button>
         </div>
         
