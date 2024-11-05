@@ -5,7 +5,7 @@ import "./input.css";
 import Button from "../Button/Button";
 
 const Input = forwardRef<HTMLInputElement, IInputProps>(
-  ({ placeholder, onSubmit, readOnly, onClick, value, onChange, isEmpty },
+  ({ placeholder, onSubmit, readOnly, onClick, value, onChange, isEmpty},
     ref
   ) => {
     const [error, setError] = useState<string | null>(null);
@@ -43,6 +43,7 @@ const Input = forwardRef<HTMLInputElement, IInputProps>(
               <Button
                 variant={"icon"}
                 icon={<IconSearch />}
+                aria-label='Sök'
                 onClick={function (): void {
                   throw new Error("Function not implemented.");
                 }}
