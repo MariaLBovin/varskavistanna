@@ -6,6 +6,7 @@ export const findNearestStop = async (
   stations: IChargingStation[]
 ): Promise<IChargingStation | null > => {
   if (stations.length === 0) return null;
+
   
   try {
     const distancePromises = stations.map(async (station) => {

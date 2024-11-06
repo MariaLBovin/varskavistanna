@@ -15,6 +15,7 @@ const ResultContainer: React.FC<IResultContainerProps> = ({
   finalBattery,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [hasError, setHasError] = useState(false)
   const [showScrollUp, setShowScrollUp] = useState(false);
   const [showScrollDown, setShowScrollDown] = useState(false);
   const [isDesktop, setIsDesktop] = useState(window.innerWidth > 750);
@@ -26,6 +27,7 @@ const ResultContainer: React.FC<IResultContainerProps> = ({
     lat: number;
     lng: number;
   } | null>(null);
+  
 
   const handleScroll = () => {
     if (containerRef.current) {
@@ -166,6 +168,7 @@ const ResultContainer: React.FC<IResultContainerProps> = ({
         
               goToGoogleMaps(startCoords, endCoords, waypoints);
             } else {
+              setHasError(true)
               console.error("Start or end coordinates are not available.");
             }
           }}

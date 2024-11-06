@@ -16,7 +16,7 @@ export const calculateFirstStop = async (
 }> => {
   const totalDistance = (leg.distance?.value || 0) / 1000;
   const requiredRange = totalDistance > carRange * 0.85;
-
+  
   if (!requiredRange) {
     const batteryUsed = (totalDistance / carRange) * 100;
     const remainingBattery = Math.max(0, 100 - batteryUsed);
@@ -27,6 +27,7 @@ export const calculateFirstStop = async (
       currentBattery: 100,
       batteryLeft: remainingBattery,
     };
+    
   }
 
   const firstStopRange = carRange * 0.85;
@@ -34,7 +35,7 @@ export const calculateFirstStop = async (
 
   let currentBattery = 100;
   const radius = 20000;
-
+  
   if (!firstStopPosition) {
     return {
       firstStop: null,
@@ -43,7 +44,7 @@ export const calculateFirstStop = async (
       batteryLeft: currentBattery,
     };
   }
-
+  
   const nearestStop = await findNextChargingStop(
     firstStopPosition.toJSON(),
     selectedFilter,

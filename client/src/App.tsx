@@ -67,8 +67,11 @@ const App: React.FC = () => {
       setDuration,
       rangeNumber,
       (stations: IChargingStation[], remainingBattery: number[], remainingDistance: number) => {
+        console.log(stations);
         if (stations.length === 0) {
-          setHasError(true);
+          // Om inga laddningsstationer finns, sätt slutgiltigt batteri och visa resultat
+          setFinalBattery(remainingBattery[remainingBattery.length - 1]);
+          setNearestStationsData({ stations: [], remainingBattery, remainingDistance });
         } else {
           setNearestStationsData({ stations, remainingBattery, remainingDistance });
         }
@@ -80,7 +83,8 @@ const App: React.FC = () => {
         setHasError(true);
       }
     );
-
+    
+    
     if (!nearestStationsData.stations.length) {
       setDirectionsResponse
     }

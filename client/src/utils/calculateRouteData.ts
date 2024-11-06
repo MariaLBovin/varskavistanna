@@ -2,6 +2,7 @@ import { IChargingStation } from "../interfaces/IChargingStations";
 import { calculateFirstStop } from "./calculateFirstStop";
 import { calculateNextStops } from "./calculateNextStops";
 
+
 export const calculateRouteData = async (
   origin: string,
   destination: string,
@@ -30,16 +31,19 @@ export const calculateRouteData = async (
       travelMode: google.maps.TravelMode.DRIVING,
     });
 
+    
     if (!results?.routes?.length) {
       handleError;
     }
+
     const route = results.routes[0]
     const leg = results.routes[0].legs[0];
     const totalDistanceKm = (leg.distance?.value || 0) / 1000;
 
     const { firstStop, remainingDistance, currentBattery, batteryLeft } =
       await calculateFirstStop(leg, carRange, selectedFilter, route);
-
+    
+    
     if (!firstStop) {
       const batteryUsed = (totalDistanceKm / carRange) * 100;
       const finalBattery = Math.round(100 - batteryUsed);
@@ -50,7 +54,8 @@ export const calculateRouteData = async (
       setNearestChargingStations([], [], remainingDistance);
       setFinalBattery(finalBattery);
       return;
-    }
+    } 
+    
         
     const { chargingStations, batteryLevels, finalBattery } =
       await calculateNextStops(
@@ -101,7 +106,8 @@ export const calculateRouteData = async (
         remainingBattery: batteryLevels[index + 1],
       })),
     ];
-
+ 
+  
     setDistance(leg.distance?.text || "Distance not available");
     setDuration(leg.duration?.text || "Duration not available");
     setDirectionsResponse(updatedResults);

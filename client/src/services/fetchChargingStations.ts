@@ -3,6 +3,7 @@ import { IChargingStation } from "../interfaces/IChargingStations";
 
 
 export const fetchChargingStations = async (latitude: number, longitude: number, radius: number): Promise<IChargingStation[]> => {
+
   try {
     const response = await axios.get<IChargingStation[]>("https://chargingstations-onglaqeyia-uc.a.run.app", {
       params: {

@@ -43,7 +43,21 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
 
   const [isOriginEmpty, setIsOriginEmpty] = useState<boolean>(false);
   const [isDestinationEmpty, setIsDestinationEmpty] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);  
+  const [hasError, setHasError] = useState(false)
+
+
+  const handleOpenCarModal = async () => {
+    setIsCarModalOpen(true);
+    setBrand("");
+    setBrands([]);
+    setModels([]);
+    setSelectedModel("");
+    setSelectedCarDetails(null);
+
+    const allBrands = await fetchAllCarBrands();
+    setBrands(allBrands);
+  };
 
   const handleBrandSubmit = async (brand: string) => {
     setBrand(brand);
@@ -57,6 +71,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
       }));
       setModels(options);
     } catch (error) {
+      setHasError(true)
       console.error("Error fetching car models:", error);
     }
   };
@@ -71,7 +86,6 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
       setSelectedCarDetails(modelDetails as unknown as Car);
       onSetCarDetails(modelDetails as unknown as Car);
     }
-    
   };
 
   const handleFilterChange = (selectedOption: string) => {
@@ -81,27 +95,31 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
   const calculateRoute = () => {
     const originValue = originRef.current?.value.trim() || "";
     const destinationValue = destinationRef.current?.value.trim() || "";
-  
+
     setOrigin(originValue);
     setDestination(destinationValue);
-  
+
     const originEmpty = originValue === "";
     const destinationEmpty = destinationValue === "";
-  
+
     setIsOriginEmpty(originEmpty);
     setIsDestinationEmpty(destinationEmpty);
 
     if (!brand && !selectedModel) {
       setErrorMessage("Vänligen välj en bilmodell eller ett märke.");
     } else {
-      setErrorMessage(null); 
+      setErrorMessage(null);
     }
-  
+
     if (!originEmpty && !destinationEmpty) {
-      onCalculateRoute(originValue, destinationValue, selectedCarDetails, selectedFilter);
+      onCalculateRoute(
+        originValue,
+        destinationValue,
+        selectedCarDetails,
+        selectedFilter
+      );
     }
   };
-  
 
   const filterOptions = [
     { label: "Restaurang", value: "restaurant" },
@@ -112,30 +130,16 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
     { label: "Bankomat", value: "atm" },
   ];
 
-  const handleOpenCarModal = async () => {
-    setIsCarModalOpen(true);
-    setBrand("");
-    setBrands([]);
-    setModels([]);
-    setSelectedModel("");
-    setSelectedCarDetails(null);
-
-    const allBrands = await fetchAllCarBrands();
-    setBrands(allBrands);
-
-  
-  };
-
   const handleOriginClick = () => {
     setOrigin("");
-    setIsOriginEmpty(false)
+    setIsOriginEmpty(false);
     if (originRef.current) {
       originRef.current.value = "";
     }
   };
   const handleDestinationClick = () => {
     setDestination("");
-    setIsDestinationEmpty(false)
+    setIsDestinationEmpty(false);
     if (destinationRef.current) {
       destinationRef.current.value = "";
     }
@@ -143,10 +147,9 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
   const handleSaveCar = () => {
     setIsCarModalOpen(false);
     if (selectedCarDetails) {
-      setBrand(brand)
+      setBrand(brand);
       setSelectedModel(selectedModel);
     }
-
   };
 
   const handleClear = () => {
@@ -184,18 +187,23 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
           onClick={handleDestinationClick}
         />
       </Autocomplete>
-    <div className="search-button-plan">
-    <Button
-        variant='tertiary'
-        text={
-          brand || selectedModel ? `${brand} ${selectedModel}` : "Sök bilmodell"
-        }
-        onClick={handleOpenCarModal}
-      />
-      {errorMessage && <span className='search-error-message'>{errorMessage}</span>}
-      <div className={isCarModalOpen ? "car-modal-open" : "car-modal-closed"}>
-    </div>
-      
+      <div className='search-button-plan'>
+        <Button
+          variant='tertiary'
+          text={
+            brand || selectedModel
+              ? `${brand} ${selectedModel}`
+              : "Sök bilmodell"
+          }
+          onClick={handleOpenCarModal}
+        />
+        {errorMessage && (
+          <span className='search-error-message'>{errorMessage}</span>
+        )}
+        <div
+          className={isCarModalOpen ? "car-modal-open" : "car-modal-closed"}
+        ></div>
+
         <CarModal
           isOpen={isCarModalOpen}
           onClose={() => setIsCarModalOpen(false)}

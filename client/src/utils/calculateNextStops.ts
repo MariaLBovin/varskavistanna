@@ -18,6 +18,7 @@ export const calculateNextStops = async (
   remainingDistance: number;
   batteryLevels: number[];
 }> => {
+  
   if (!firstStop) {
     return {
       chargingStations: [],

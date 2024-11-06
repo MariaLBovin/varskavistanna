@@ -19,12 +19,16 @@ const Input = forwardRef<HTMLInputElement, IInputProps>(
 
     const handleSubmit = (event: FormEvent) => {
       event.preventDefault();
-      if (value && value.trim() !== "") {
-        onSubmit?.(value);
+      const inputValue = (ref as React.RefObject<HTMLInputElement>).current?.value;
+
+      if (inputValue && inputValue.trim() !== "") {
+        onSubmit?.(inputValue);
+        setError(null);
       } else {
-        setError('Det här fältet är obligatoriskt');
+        setError("Det här fältet är obligatoriskt");
       }
     };
+
 
     return (
       <div className='input'>
