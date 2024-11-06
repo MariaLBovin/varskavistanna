@@ -7,6 +7,7 @@ import Filter from "../components/Filter/Filter";
 import { fetchAllCarBrands, fetchCarsByBrand } from "../services/getData";
 import { SelectOption } from "../components/Select/interface";
 import { Car } from "../interfaces/cars";
+import NotFound from "./404";
 
 interface SearchComponentProps {
   onCalculateRoute: (
@@ -169,6 +170,10 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
     }
   };
 
+  if (hasError) {
+    return <NotFound />;
+  }
+  
   return (
     <>
       <Autocomplete>

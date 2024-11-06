@@ -6,6 +6,7 @@ import { IResultContainerProps } from "../interfaces/IResultContainer";
 import Button from "../components/Button/Button";
 import IconArrowDown from "../assets/icons/IconArrowDown";
 import IconArrowUp from "../assets/icons/IconArrowUp";
+import NotFound from "./404";
 
 const ResultContainer: React.FC<IResultContainerProps> = ({
   chargingStops,
@@ -96,7 +97,9 @@ const ResultContainer: React.FC<IResultContainerProps> = ({
   const handleBackToHome = () => {
     window.location.href = "/"; 
   };
-
+  if (hasError) {
+    return <NotFound />;
+  }
   return (
     <div className='result-outer'>
       <div className='scroll-container'>
