@@ -97,6 +97,7 @@ const ResultContainer: React.FC<IResultContainerProps> = ({
   const handleBackToHome = () => {
     window.location.href = "/"; 
   };
+  
   if (hasError) {
     return <NotFound />;
   }

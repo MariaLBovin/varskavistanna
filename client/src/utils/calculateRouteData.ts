@@ -37,6 +37,7 @@ export const calculateRouteData = async (
     }
 
     const route = results.routes[0]
+    
     const leg = results.routes[0].legs[0];
     const totalDistanceKm = (leg.distance?.value || 0) / 1000;
 
@@ -53,6 +54,7 @@ export const calculateRouteData = async (
 
       setNearestChargingStations([], [], remainingDistance);
       setFinalBattery(finalBattery);
+      setDirectionsResponse(results);
       return;
     } 
     
